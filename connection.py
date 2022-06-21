@@ -1,4 +1,6 @@
 import csv
+from datetime import datetime
+
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image',]
 ANSWER_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image',]
@@ -9,6 +11,8 @@ def read_questions():
     with open('question.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for item in reader:
+            ts_epoch = int(item['submission_time'])
+            item['submission_time'] = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
             questions.append(item)
     return questions
 
