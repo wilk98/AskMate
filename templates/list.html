@@ -7,7 +7,7 @@
     <body>
         <h3>Questions</h3>
         <a href="/question">Add new question</a><br>
-             {% for item in questions %}
+             {% for item in list %}
                  <p>{{ item.id }}. {{ item.message }}</p>
                  <p>Time of the submission: {{ item.submission_time }}</p>
                  <p>View number: {{ item.view_number }}</p>

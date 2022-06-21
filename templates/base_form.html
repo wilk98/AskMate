@@ -11,7 +11,7 @@
             the user submits the form -->
         <form action="{% block action %}{% endblock %}" method="post">
             <!-- Label for the textarea to help the user understand what it is for. -->
-            <p><label for="title">{% block title %}{% endblock %}</label><br>
+            <p><label for="title">{% block quest_title %}{% endblock %}</label><br>
             <textarea id="title" name="title" rows="1" cols="40">{{ title if title }}</textarea>
             </p>
             <p>

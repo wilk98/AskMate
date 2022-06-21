@@ -13,6 +13,24 @@ def read_questions():
     return questions
 
 
+def get_question(question_id):
+    with open('question.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for item in reader:
+            if question_id == item['id']:
+                question_to_display = item
+        return question_to_display
+
+
+def get_answer(question_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for item in reader:
+            if question_id == item['question_id']:
+                answer_to_display = item
+        return answer_to_display
+
+
 def post_answer(answer):
     with open('answer.csv', 'r+', newline='') as csvfile:
         last_id = 1
