@@ -1,13 +1,6 @@
 id,submission_time,view_number,vote_number,title,message,image
 1,1493368154,29,7,"How to make lists in Python?","I am totally new to this, any hints?",
-2,1493068124,15,9,"Wordpress loading multiple jQuery Versions","I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I cann call $('.myBook').booklet(),
-3,1655887429,0,0,aaa,ssasas,image
-4,1655887430,0,0,aaa,ssasas,image
-5,1655887564,0,0,aaa,ssasas,image
-6,1655888296,0,0,aaa,ssasas,image
-7,1655888644,0,0,aaa,ssasas,image
-8,1655888854,0,0,aaa,ssasas,image
-9,1655888854,0,0,aaa,ssasas,image
-10,1655888964,0,0,aaa,ssasas,image
-11,1655889137,0,0,aaa,ssasas,image
-12,1655889239,0,0,aaa,ssasas,image
+2,1493068124,15,9,"Wordpress loading multiple jQuery Versions","I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I can call $('.myBook').booklet()",
+3,1493368154,0,0,New question,What is the best programming language?,
+4,1493368154,0,0,HTML templates,How to inherit HTML template?,
+5,1493368154,0,0,Python DictWriter,How to save user input to CSV file?,
