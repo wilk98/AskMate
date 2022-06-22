@@ -8,11 +8,11 @@
         <h3>Questions</h3>
         <a href="/question">Add new question</a><br>
              {% for item in list %}
-                 <p>{{ item.id }}. {{ item.message }}</p>
+                 <p>{{ item.id }}. {{ item.title }}</p>
                  <p>Time of the submission: {{ item.submission_time }}</p>
                  <p>View number: {{ item.view_number }}</p>
                  <p>Votes: {{ item.vote_number }}</p>
-                 <p>{{ item.title }}</p>
+                 <p>{{ item.message }}</p>
                  <p>{{ item.image }}</p>
              {% endfor %}
     </body>
