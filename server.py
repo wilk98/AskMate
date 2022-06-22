@@ -41,9 +41,12 @@ def add_new_answer(question_id):
 
 @app.route('/question/<question_id>')
 def display_question(question_id):
+    print(question_id)
     question_to_show = connection.get_question(question_id)
     answer_to_show = connection.get_answer(question_id)
-    return render_template('question_to_show.html', question_id=question_id,
+    print(answer_to_show)
+    if answer_to_show != None:
+        return render_template('question_to_show.html', question_id=question_id,
                            submission_time=question_to_show.get('submission_time'),
                            view_number=question_to_show.get('view_number'),
                            vote_number=question_to_show.get('vote_number'),
@@ -52,6 +55,17 @@ def display_question(question_id):
                            image=question_to_show.get('image'),
                            answer=answer_to_show.get('message')
                            )
+    else:
+        return render_template('question_to_show.html', question_id=question_id,
+                               submission_time=question_to_show.get('submission_time'),
+                               view_number=question_to_show.get('view_number'),
+                               vote_number=question_to_show.get('vote_number'),
+                               title=question_to_show.get('title'),
+                               message=question_to_show.get('message'),
+                               image=question_to_show.get('image'),
+                               answer= "No answer yet"
+                               )
+
 
 
 @app.route('/question', methods=["POST", "GET"])
