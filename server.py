@@ -62,13 +62,21 @@ def display_question(question_id):
 
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
+    question_to_add = {}
     if request.method == "POST":
-        question = request.form["question"]
-        title = request.form["title"]
-        connection.post_question(title, question)
-        return render_template('list.html')
+        question_to_add['id'] = 0
+        question_to_add['submission_time'] = int(time.time())
+        question_to_add['view_number'] = 0
+        question_to_add['vote_number'] = 0
+        question_to_add['title'] = request.form["title"]
+        question_to_add['message'] = request.form["message"]
+        # question_to_add['image'] = request.form["image"]
+        connection.post_question(question_to_add)
+        return redirect('/')
     else:
-        return render_template("question.html")
+        return render_template('question.html')
+
+
 
 
 if __name__ == "__main__":
