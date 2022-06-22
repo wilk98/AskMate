@@ -4,3 +4,5 @@ id,submission_time,view_number,vote_number,title,message,image
 3,1493368154,0,0,New question,What is the best programming language?,
 4,1493368154,0,0,HTML templates,How to inherit HTML template?,
 5,1493368154,0,0,Python DictWriter,How to save user input to CSV file?,
+6,1493368154,0,0,Flask,What is it and what can you do with it?,
+7,1655911156,0,0,How to get data,How to get data from CSV,
