@@ -15,7 +15,7 @@ def read_questions():
             ts_epoch = int(item['submission_time'])
             item['submission_time'] = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
             questions.append(item)
-    return questions
+    return sorted(questions, key=lambda item: item['submission_time'], reverse = True)
 
 
 def get_question(question_id):
@@ -62,4 +62,5 @@ def post_question(title, question):
         writer_object.writerow(new_file)
         f_object.close()
 
-post_question("aaa", "ssasas")
+# post_question("aaa", "ssasas")
+
