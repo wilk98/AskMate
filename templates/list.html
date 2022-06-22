@@ -8,12 +8,13 @@
         <h3>Questions</h3>
         <a href="/question">Add new question</a><br>
              {% for item in list %}
-                 <p>{{ item.id }}. {{ item.title }}</p>
+                 <p>{{ item.id }}. <a href="/question/{{ item.id }}">{{ item.title }}</a></p>
                  <p>Time of the submission: {{ item.submission_time }}</p>
                  <p>View number: {{ item.view_number }}</p>
                  <p>Votes: {{ item.vote_number }}</p>
                  <p>{{ item.message }}</p>
                  <p>{{ item.image }}</p>
+                 <p><a href="/question/{{ item.id }}/new_answer">Add new answer</a><br></p>
              {% endfor %}
     </body>
 </html>
