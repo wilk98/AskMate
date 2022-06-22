@@ -32,11 +32,11 @@ def add_new_answer(question_id):
                            message='')
 
 
-@app.route("/question/<question_id>")
-def route_new_answer(question_id):
-    answer_to_display = connection.get_answer(question_id)
-    return render_template("answer.html", answer_id=answer_to_display.get('id'),
-                           message=answer_to_display.get('message'))
+# @app.route("/question/<question_id>")
+# def route_new_answer(question_id):
+#     answer_to_display = connection.get_answer(question_id)
+#     return render_template("answer.html", answer_id=answer_to_display.get('id'),
+#                            message=answer_to_display.get('message'))
 
 
 @app.route('/question/<question_id>')
