@@ -14,6 +14,7 @@
                  <p>Votes: {{ item.vote_number }}</p>
                  <p>{{ item.message }}</p>
                  <p>{{ item.image }}</p>
+                 <p><a href="/question/{{ item.id }}/new_answer">Add new answer</a><br></p>
              {% endfor %}
     </body>
 </html>
