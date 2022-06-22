@@ -60,5 +60,16 @@ def display_question(question_id):
                            )
 
 
+@app.route('/question', methods=["POST", "GET"])
+def add_question():
+    if request.method == "POST":
+        question = request.form["question"]
+        title = request.form["title"]
+        connection.post_question(title, question)
+        return render_template('list.html')
+    else:
+        return render_template("question.html")
+
+
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
