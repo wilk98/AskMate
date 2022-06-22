@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from csv import writer
 
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -50,3 +51,12 @@ def post_answer(answer):
         writer = csv.DictWriter(csvfile, QUESTION_HEADER)
         writer.writerow(answer)
 
+def post_question(title, question):
+    rowcount = 0
+    for row in open("question.csv"):
+        rowcount += 1
+    new_file = [rowcount, 'submission_time', 0, 0, title, question, 'image']
+    with open('question.csv', 'a', newline="") as f_object:
+        writer_object = writer(f_object)
+        writer_object.writerow(new_file)
+        f_object.close()
