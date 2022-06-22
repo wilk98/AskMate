@@ -42,12 +42,7 @@ def post_answer(answer):
         for answer in reader:
             last_id = int(answer['id'])+1
         answer['id'] = last_id
-        # answer['submission_time'] = #z formularza
-        answer['vote_number'] = 0
-        answer['question_id'] = 'question_id'
-        # answer['message'] = #z formularza
-        # answer['image'] = #z formularza
-        writer = csv.DictWriter(csvfile, QUESTION_HEADER)
+        writer = csv.DictWriter(csvfile, ANSWER_HEADER)
         writer.writerow(answer)
 
 
@@ -60,3 +55,4 @@ def post_question(question):
         question['id'] = last_id
         writer = csv.DictWriter(csvfile, QUESTION_HEADER)
         writer.writerow(question)
+
