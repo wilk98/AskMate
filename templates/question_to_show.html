@@ -7,6 +7,8 @@
 <body>
 <p>{{ question_id }}. {{ title }}</p>  <a href="/question/{{ question_id }}/delete">Delete question</a><br>
 <p>{{ message }}</p>
-    <p>{{ answer }}</p>
+ {% for item in answer %}
+    <p>{{ item.message }}</p>
+ {% endfor %}
 </body>
 </html>

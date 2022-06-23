@@ -43,8 +43,8 @@ def add_new_answer(question_id):
 @app.route('/question/<question_id>')
 def display_question(question_id):
     question_to_show = connection.get_question(question_id)
-    answer_to_show = connection.get_answer(question_id)
-    if answer_to_show != None:
+    answers_to_show = connection.get_answer(question_id)
+    if answers_to_show != None:
         return render_template('question_to_show.html', question_id=question_id,
                                submission_time=question_to_show.get('submission_time'),
                                view_number=question_to_show.get('view_number'),
@@ -52,7 +52,7 @@ def display_question(question_id):
                                title=question_to_show.get('title'),
                                message=question_to_show.get('message'),
                                image=question_to_show.get('image'),
-                               answer=answer_to_show.get('message')
+                               answer=answers_to_show
                                )
     else:
         return render_template('question_to_show.html', question_id=question_id,
@@ -69,6 +69,7 @@ def display_question(question_id):
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
     connection.delete_question(question_id)
+    connection.delete_answer(question_id)
     return redirect('/')
 
 
