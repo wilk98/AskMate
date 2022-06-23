@@ -5,14 +5,10 @@ import csv
 
 app = Flask(__name__)
 
+
 @app.route("/")
-@app.route("/index")
 def hello():
-<<<<<<< HEAD
     return render_template('base.html')
-=======
-    return render_template('index.html')
->>>>>>> gali
 
 
 @app.route("/list")
@@ -47,7 +43,6 @@ def add_new_answer(question_id):
 @app.route('/question/<question_id>')
 def display_question(question_id):
     question_to_show = connection.get_question(question_id)
-<<<<<<< HEAD
     answers_to_show = connection.get_answer(question_id)
     if answers_to_show != None:
         return render_template('question_to_show.html', question_id=question_id,
@@ -59,19 +54,6 @@ def display_question(question_id):
                                image=question_to_show.get('image'),
                                answer=answers_to_show
                                )
-=======
-    answer_to_show = connection.get_answer(question_id)
-    if answer_to_show != None:
-        return render_template('question_to_show.html', question_id=question_id,
-                           submission_time=question_to_show.get('submission_time'),
-                           view_number=question_to_show.get('view_number'),
-                           vote_number=question_to_show.get('vote_number'),
-                           title=question_to_show.get('title'),
-                           message=question_to_show.get('message'),
-                           image=question_to_show.get('image'),
-                           answer=answer_to_show.get('message')
-                           )
->>>>>>> gali
     else:
         return render_template('question_to_show.html', question_id=question_id,
                                submission_time=question_to_show.get('submission_time'),
@@ -84,15 +66,12 @@ def display_question(question_id):
                                )
 
 
-<<<<<<< HEAD
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
     connection.delete_question(question_id)
     connection.delete_answer(question_id)
     return redirect('/')
 
-=======
->>>>>>> gali
 
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
@@ -108,7 +87,6 @@ def add_question():
         connection.post_question(question_to_add)
         return redirect('/')
     else:
-<<<<<<< HEAD
         return render_template('question.html', title=question_to_add.get('title'),
                                message=question_to_add.get('message'))
 
@@ -138,17 +116,7 @@ def home_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
-=======
-        return render_template('question.html')
-
-
-
->>>>>>> gali
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-<<<<<<< HEAD
-
-=======
->>>>>>> gali
