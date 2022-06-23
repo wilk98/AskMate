@@ -65,7 +65,24 @@ def display_question(question_id):
                                answer= "No answer yet"
                                )
 
+['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+@app.route("/answer/<answer_id>")
+def display_answer(answer_id):
+    answer_to_show = connection.get_answer_one(answer_id)
+    print(answer_to_show)
+    return render_template('answer_to_show.html', id=answer_id,
+                               submission_time=answer_to_show.get('submission_time'),
+                               vote_number=answer_to_show.get('vote_number'),
+                               question_id=answer_to_show.get('question_id'),
+                               message=answer_to_show.get('message'),
+                               image=answer_to_show.get('image'),
+                               )
 
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id):
+    connection.delete_question(question_id)
+    connection.delete_answer(question_id)
+    return redirect('/')
 
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
@@ -81,10 +98,35 @@ def add_question():
         connection.post_question(question_to_add)
         return redirect('/')
     else:
-        return render_template('question.html')
+        return render_template('question.html', title=question_to_add.get('title'),
+                               message=question_to_add.get('message'))
 
 
+@app.route('/question/<question_id>/vote-up')
+def que_vote_up(question_id):
+    connection.vote_question_up(question_id)
+    return redirect('/list')
 
+@app.route('/question/<question_id>/vote-down')
+def que_vote_down(question_id):
+    connection.vote_question_down(question_id)
+    return redirect('/list')
+
+
+@app.route("/team")
+def team_site():
+    return render_template('team.html')
+
+
+@app.route("/index")
+def home_site():
+    return render_template('index.html')
+
+
+@app.route("/most_popular")
+def most_popular_site():
+    top_questions = connection.top_questions()
+    return render_template('most_popular.html', most_popular=top_questions)
 
 
 if __name__ == "__main__":
