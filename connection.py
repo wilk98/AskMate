@@ -63,7 +63,13 @@ def get_answer(question_id):
                 answers.append(item)
     return answers
 
-
+def get_answer_one(answer_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for item in reader:
+            if answer_id == item['id']:
+                print(item)
+                return item
 #def delete_answer():
 
 
