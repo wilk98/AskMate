@@ -40,14 +40,27 @@ def delete_question(question_id):
         writer.writerows(questions_list)
 
 
+def delete_answer(question_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        answers_list = []
+        for item in reader:
+            if item['question_id'] != question_id:
+                answers_list.append(item)
+    with open('answer.csv', 'w', newline='') as writeFile:
+        writer = csv.DictWriter(writeFile, ANSWER_HEADER)
+        writer.writeheader()
+        writer.writerows(answers_list)
+
 
 def get_answer(question_id):
+    answers = []
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for item in reader:
             if question_id == item['question_id']:
-                answer_to_display = item
-                return answer_to_display
+                answers.append(item)
+    return answers
 
 
 #def delete_answer():
