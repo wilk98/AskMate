@@ -31,7 +31,7 @@ def get_answer(question_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for item in reader:
-            if question_id == item['id']:
+            if question_id == item['question_id']:
                 answer_to_display = item
                 return answer_to_display
 
@@ -58,4 +58,6 @@ def post_question(question):
         question['submission_time'] = int(time.time())
         writer = csv.DictWriter(csvfile, QUESTION_HEADER)
         writer.writerow(question)
+
+
 

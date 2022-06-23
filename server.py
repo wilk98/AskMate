@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import time
 import connection
+import csv
 
 app = Flask(__name__)
 
@@ -41,10 +42,8 @@ def add_new_answer(question_id):
 
 @app.route('/question/<question_id>')
 def display_question(question_id):
-    print(question_id)
     question_to_show = connection.get_question(question_id)
     answer_to_show = connection.get_answer(question_id)
-    print(answer_to_show)
     if answer_to_show != None:
         return render_template('question_to_show.html', question_id=question_id,
                            submission_time=question_to_show.get('submission_time'),
@@ -85,5 +84,9 @@ def add_question():
         return render_template('question.html')
 
 
+
+
+
 if __name__ == "__main__":
     app.run(debug=True)
+
