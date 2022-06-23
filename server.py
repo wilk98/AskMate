@@ -90,6 +90,16 @@ def add_question():
         return render_template('question.html')
 
 
+@app.route('/question/<question_id>/vote-up')
+def que_vote_up(question_id):
+    connection.vote_question_up(question_id)
+    return redirect('/list')
+
+@app.route('/question/<question_id>/vote-down')
+def que_vote_down(question_id):
+    connection.vote_question_down(question_id)
+    return redirect('/list')
+
 if __name__ == "__main__":
     app.run(debug=True)
 
