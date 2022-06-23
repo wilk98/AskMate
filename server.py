@@ -107,9 +107,9 @@ def team_site():
     return render_template('team.html')
 
 
-@app.route("/home")
+@app.route("/index")
 def home_site():
-    return render_template('home.html')
+    return render_template('index.html')
 
 
 @app.route("/most_popular")
