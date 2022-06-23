@@ -6,12 +6,11 @@
     <title>Question site</title>
 </head>
 <body>
-
-<p>{{ vote_number }}</p> <a href="/question/{{ question_id }}/vote-up">Vote up</a>  <a href="/question/{{ question_id }}/vote-down">Vote down</a><br>
+<a href="/question/{{ question_id }}/vote-up">Vote up</a>  <a href="/question/{{ question_id }}/vote-down">Vote down</a><br>
 <p>{{ question_id }}. {{ title }}</p>  <a href="/question/{{ question_id }}/delete">Delete question</a>
 <p>{{ message }}</p>
  {% for item in answer %}
-     <p><a href="/answer/{{ item.id }}">{{ item.message }}</a></p>
+     <p><a href="/answer/{{ item.id }}">{{ item.message }}</a>  Vote: {{ item.vote_number }}</p>
  {% endfor %}
 </body>
 </html>
