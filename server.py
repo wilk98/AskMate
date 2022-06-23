@@ -52,7 +52,7 @@ def display_question(question_id):
                                title=question_to_show.get('title'),
                                message=question_to_show.get('message'),
                                image=question_to_show.get('image'),
-                               answer=answers_to_show
+                               answer=answers_to_show,
                                )
     else:
         return render_template('question_to_show.html', question_id=question_id,
@@ -65,6 +65,18 @@ def display_question(question_id):
                                answer= "No answer yet"
                                )
 
+['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+@app.route("/answer/<answer_id>")
+def display_answer(answer_id):
+    answer_to_show = connection.get_answer_one(answer_id)
+    print(answer_to_show)
+    return render_template('answer_to_show.html', id=answer_id,
+                               submission_time=answer_to_show.get('submission_time'),
+                               vote_number=answer_to_show.get('vote_number'),
+                               question_id=answer_to_show.get('question_id'),
+                               message=answer_to_show.get('message'),
+                               image=answer_to_show.get('image'),
+                               )
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
@@ -116,6 +128,8 @@ def home_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
+
+
 
 
 if __name__ == "__main__":

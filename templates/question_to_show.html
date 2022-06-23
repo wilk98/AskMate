@@ -8,10 +8,10 @@
 <body>
 
 <p>{{ vote_number }}</p> <a href="/question/{{ question_id }}/vote-up">Vote up</a>  <a href="/question/{{ question_id }}/vote-down">Vote down</a><br>
-<p>{{ question_id }}. {{ title }}</p>  <a href="/question/{{ question_id }}/delete">Delete question</a><br>
+<p>{{ question_id }}. {{ title }}</p>  <a href="/question/{{ question_id }}/delete">Delete question</a>
 <p>{{ message }}</p>
  {% for item in answer %}
-    <p>{{ item.message }}</p>
+     <p><a href="/answer/{{ item.id }}">{{ item.message }}</a></p>
  {% endfor %}
 </body>
 </html>
