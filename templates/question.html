@@ -1,20 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Questions</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
 
-        <h3>Ask a question</h3>
+{% block title %}
+    Ask a question
+{% endblock %}
 
 
-        <form action="/question" method="post">
-            <p>Title: </p><input type="text" name="title"/>
-            <p>Question: </p> <input type="text" name="message"/><br>
-            <input type="submit" name="Send"/>
-
+{% block body %}
+     <h2>Ask a question</h2>
+         <form class="form-group col-lg-5" action="/question" method="post">
+            <label  >Title: </label><br>
+             <input  class="form-control col-lg-6" type="text" name="title "/><br>
+             <label>Question: </label> <br>
+             <textarea class="form-control" type="text" name="message" ></textarea><br>
+            <button type="submit" class="btn btn-success mt-4 btn-lg"><strong>Send</strong></button>
 
         </form>
-    </body>
-</html>
+
+{% endblock %}
