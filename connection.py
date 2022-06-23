@@ -27,6 +27,19 @@ def get_question(question_id):
                 return question_to_display
 
 
+def delete_question(question_id):
+    with open('question.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        questions_list = []
+        for item in reader:
+            if item['id'] != question_id:
+                questions_list.append(item)
+    with open('question.csv', 'w', newline='') as writeFile:
+        writer = csv.DictWriter(writeFile, QUESTION_HEADER)
+        writer.writeheader()
+        writer.writerows(questions_list)
+
+
 def get_answer(question_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -34,6 +47,10 @@ def get_answer(question_id):
             if question_id == item['question_id']:
                 answer_to_display = item
                 return answer_to_display
+
+
+#def delete_answer():
+
 
 
 def post_answer(answer):

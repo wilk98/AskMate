@@ -46,14 +46,14 @@ def display_question(question_id):
     answer_to_show = connection.get_answer(question_id)
     if answer_to_show != None:
         return render_template('question_to_show.html', question_id=question_id,
-                           submission_time=question_to_show.get('submission_time'),
-                           view_number=question_to_show.get('view_number'),
-                           vote_number=question_to_show.get('vote_number'),
-                           title=question_to_show.get('title'),
-                           message=question_to_show.get('message'),
-                           image=question_to_show.get('image'),
-                           answer=answer_to_show.get('message')
-                           )
+                               submission_time=question_to_show.get('submission_time'),
+                               view_number=question_to_show.get('view_number'),
+                               vote_number=question_to_show.get('vote_number'),
+                               title=question_to_show.get('title'),
+                               message=question_to_show.get('message'),
+                               image=question_to_show.get('image'),
+                               answer=answer_to_show.get('message')
+                               )
     else:
         return render_template('question_to_show.html', question_id=question_id,
                                submission_time=question_to_show.get('submission_time'),
@@ -65,6 +65,11 @@ def display_question(question_id):
                                answer= "No answer yet"
                                )
 
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id):
+    connection.delete_question(question_id)
+    return redirect('/')
 
 
 @app.route('/question', methods=["POST", "GET"])
@@ -82,9 +87,6 @@ def add_question():
         return redirect('/')
     else:
         return render_template('question.html')
-
-
-
 
 
 if __name__ == "__main__":
