@@ -1,17 +1,18 @@
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question site</title>
-</head>
-<body>
-<a href="/question/{{ question_id }}/vote-up">Vote up</a>  <a href="/question/{{ question_id }}/vote-down">Vote down</a><br>
-<p>{{ question_id }}. {{ title }}</p>  <a href="/question/{{ question_id }}/delete">Delete question</a>
-<p>{{ message }}</p>
+{% block title %}
+Question site
+{% endblock %}
+
+
+{% block body %}
+
+<div>
+    <h2>{{ question_id }}. {{ title }}</h2>
+    <a href="/question/<id_question>/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
+    <p>{{ message }}</p>
  {% for item in answer %}
      <p><a href="/answer/{{ item.id }}">{{ item.message }}</a>  Vote: {{ item.vote_number }}</p>
  {% endfor %}
-</body>
-</html>
-
+</div>
+{% endblock %}
