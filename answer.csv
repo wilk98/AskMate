@@ -1,4 +1,5 @@
 id,submission_time,vote_number,question_id,message,image
+<<<<<<< HEAD
 1,1493398154,4,1,You need to use brackets: my_list = [],
 2,1493088154,35,1,Look it up in the Python docs,
 3,1655911671,0,7,"You have to add new line with text, mate",
@@ -13,3 +14,7 @@ id,submission_time,vote_number,question_id,message,image
 
 {% block title page_title %}
 Note that as soon as you specify a second argument it's threated as short block and Jinja won't look for an closing tag.",
+=======
+1,1493398154,4,1,"You need to use brackets: my_list = []",
+2,1493088154,35,1,"Look it up in the Python docs",
+>>>>>>> gali
