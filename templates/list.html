@@ -12,7 +12,11 @@ Questions
      </div>
                  {% for item in list %}
                      <div class="alert alert-secondary">
+<<<<<<< HEAD
                          <p>{{ item.id }}. <a class="text-uppercase" href ="/question/{{ item.id }}" class="">{{ item.title }}</a></p>
+=======
+                         <p>{{ item.id }}. <a class="text-uppercase " href ="/question/{{ item.id }}" class="">{{ item.title }}</a></p>
+>>>>>>> gali
                          <div class="d-flex justify-content-between">
                              <p><strong>Time of the submission: {{ item.submission_time }}</strong></p>
                              <p><strong>View number: {{ item.view_number }}</strong></p>
@@ -25,4 +29,8 @@ Questions
                      </div>
                  {% endfor %}
 </div>
+<<<<<<< HEAD
 {% endblock %}
+=======
+{% endblock %}
+>>>>>>> gali

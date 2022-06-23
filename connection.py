@@ -1,7 +1,10 @@
 import csv
 from datetime import datetime
 import time
+<<<<<<< HEAD
 from operator import itemgetter
+=======
+>>>>>>> gali
 
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -28,6 +31,7 @@ def get_question(question_id):
                 return question_to_display
 
 
+<<<<<<< HEAD
 def delete_question(question_id):
     with open('question.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -56,16 +60,24 @@ def delete_answer(question_id):
 
 def get_answer(question_id):
     answers = []
+=======
+def get_answer(question_id):
+>>>>>>> gali
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for item in reader:
             if question_id == item['question_id']:
+<<<<<<< HEAD
                 answers.append(item)
     return answers
 
 
 #def delete_answer():
 
+=======
+                answer_to_display = item
+                return answer_to_display
+>>>>>>> gali
 
 
 def post_answer(answer):
@@ -89,6 +101,7 @@ def post_question(question):
         question['id'] = last_id
         question['submission_time'] = int(time.time())
         writer = csv.DictWriter(csvfile, QUESTION_HEADER)
+<<<<<<< HEAD
         writer.writerow(question)
 
 
@@ -133,3 +146,6 @@ def top_questions():
     return sorted(all_questions, key=itemgetter('view_number'), reverse=True)
 
 
+=======
+        writer.writerow(question)
+>>>>>>> gali
