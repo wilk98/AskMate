@@ -87,7 +87,8 @@ def add_question():
         connection.post_question(question_to_add)
         return redirect('/')
     else:
-        return render_template('question.html')
+        return render_template('question.html', title=question_to_add.get('title'),
+                               message=question_to_add.get('message'))
 
 
 @app.route('/question/<question_id>/vote-up')
@@ -99,6 +100,23 @@ def que_vote_up(question_id):
 def que_vote_down(question_id):
     connection.vote_question_down(question_id)
     return redirect('/list')
+
+
+@app.route("/team")
+def team_site():
+    return render_template('team.html')
+
+
+@app.route("/home")
+def home_site():
+    return render_template('home.html')
+
+
+@app.route("/most_popular")
+def most_popular_site():
+    top_questions = connection.top_questions()
+    return render_template('most_popular.html', most_popular=top_questions)
+
 
 if __name__ == "__main__":
     app.run(debug=True)

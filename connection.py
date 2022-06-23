@@ -1,6 +1,7 @@
 import csv
 from datetime import datetime
 import time
+from operator import itemgetter
 
 
 QUESTION_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
@@ -106,6 +107,7 @@ def vote_question_up(question_id):
         writer.writeheader()
         writer.writerows(questions_list)
 
+
 def vote_question_down(question_id):
     with open('question.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -120,3 +122,14 @@ def vote_question_down(question_id):
         writer = csv.DictWriter(writeFile, QUESTION_HEADER)
         writer.writeheader()
         writer.writerows(questions_list)
+
+
+def top_questions():
+    all_questions = []
+    with open('question.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for item in reader:
+            all_questions.append(item)
+    return sorted(all_questions, key=itemgetter('view_number'), reverse=True)
+
+
