@@ -65,12 +65,11 @@ def display_question(question_id):
                                answer= "No answer yet"
                                )
 
-['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = connection.get_answer_one(answer_id)
-    print(answer_to_show)
-    return render_template('answer_to_show.html', id=answer_id,
+    return render_template('answer_to_show.html', answer_id=answer_id,
                                submission_time=answer_to_show.get('submission_time'),
                                vote_number=answer_to_show.get('vote_number'),
                                question_id=answer_to_show.get('question_id'),
@@ -113,6 +112,15 @@ def que_vote_down(question_id):
     connection.vote_question_down(question_id)
     return redirect('/list')
 
+@app.route('/answer/<answer_id>/vote-up')
+def ans_vote_up(answer_id):
+    connection.vote_answer_up(answer_id)
+    return redirect('/list')
+
+@app.route('/answer/<answer_id>/vote-down')
+def ans_vote_down(answer_id):
+    connection.vote_answer_down(answer_id)
+    return redirect('/list')
 
 @app.route("/team")
 def team_site():

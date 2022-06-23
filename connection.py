@@ -68,7 +68,8 @@ def get_answer_one(answer_id):
         reader = csv.DictReader(csvfile)
         for item in reader:
             if answer_id == item['id']:
-                print(item)
+                ts_epoch = int(item['submission_time'])
+                item['submission_time'] = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
                 return item
 #def delete_answer():
 
@@ -130,6 +131,37 @@ def vote_question_down(question_id):
         writer.writerows(questions_list)
 
 
+def vote_answer_up(answer_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        answer_list = []
+        for item in reader:
+            if int(item['id']) == int(answer_id):
+                number = int(item['vote_number'])
+                number += 1
+                item['vote_number'] = number
+            answer_list.append(item)
+    with open('answer.csv', 'w', newline='') as writeFile:
+        writer = csv.DictWriter(writeFile, ANSWER_HEADER)
+        writer.writeheader()
+        writer.writerows(answer_list)
+
+
+def vote_answer_down(answer_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        answer_list = []
+        for item in reader:
+            if int(item['id']) == int(answer_id):
+                number = int(item['vote_number'])
+                number -= 1
+                item['vote_number'] = number
+            answer_list.append(item)
+    with open('answer.csv', 'w', newline='') as writeFile:
+        writer = csv.DictWriter(writeFile, ANSWER_HEADER)
+        writer.writeheader()
+        writer.writerows(answer_list)
+
 def top_questions():
     all_questions = []
     with open('question.csv', 'r', newline='') as csvfile:
@@ -137,5 +169,4 @@ def top_questions():
         for item in reader:
             all_questions.append(item)
     return sorted(all_questions, key=itemgetter('view_number'), reverse=True)
-
 
