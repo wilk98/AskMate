@@ -53,6 +53,18 @@ def delete_answer(question_id):
         writer.writeheader()
         writer.writerows(answers_list)
 
+def delete_answer_one(answer_id):
+    with open('answer.csv', 'r', newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        answers_list = []
+        for item in reader:
+            if item['id'] != answer_id:
+                answers_list.append(item)
+    with open('answer.csv', 'w', newline='') as writeFile:
+        writer = csv.DictWriter(writeFile, ANSWER_HEADER)
+        writer.writeheader()
+        writer.writerows(answers_list)
+
 
 def get_answer(question_id):
     answers = []

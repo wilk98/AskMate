@@ -18,6 +18,24 @@ def show_questions():
     return render_template('list.html', list=questions)
 
 
+@app.route('/question', methods=["POST", "GET"])
+def add_question():
+    question_to_add = {}
+    if request.method == "POST":
+        question_to_add['id'] = 0
+        question_to_add['submission_time'] = int(time.time())
+        question_to_add['view_number'] = 0
+        question_to_add['vote_number'] = 0
+        question_to_add['title'] = request.form['title']
+        question_to_add['message'] = request.form['message']
+        # question_to_add['image'] = request.form["image"]
+        connection.post_question(question_to_add)
+        return redirect('/list')
+    else:
+        return render_template('question.html', title=question_to_add.get('title'),
+                               message=question_to_add.get('message'))
+
+
 @app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
 def add_new_answer(question_id):
     answer_to_post = {}
@@ -84,23 +102,11 @@ def delete_question(question_id):
     connection.delete_answer(question_id)
     return redirect('/list')
 
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id):
+    connection.delete_answer_one(answer_id)
+    return redirect('/list')
 
-@app.route('/question', methods=["POST", "GET"])
-def add_question():
-    question_to_add = {}
-    if request.method == "POST":
-        question_to_add['id'] = 0
-        question_to_add['submission_time'] = int(time.time())
-        question_to_add['view_number'] = 0
-        question_to_add['vote_number'] = 0
-        question_to_add['title'] = request.form["title"]
-        question_to_add['message'] = request.form["message"]
-        # question_to_add['image'] = request.form["image"]
-        connection.post_question(question_to_add)
-        return redirect('/')
-    else:
-        return render_template('question.html', title=question_to_add.get('title'),
-                               message=question_to_add.get('message'))
 
 
 @app.route('/question/<question_id>/vote-up')
