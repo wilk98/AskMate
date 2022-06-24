@@ -7,8 +7,9 @@ app = Flask(__name__)
 
 
 @app.route("/")
+@app.route("/index")
 def hello():
-    return render_template('base.html')
+    return render_template('index.html')
 
 
 @app.route("/list")
@@ -81,7 +82,7 @@ def display_answer(answer_id):
 def delete_question(question_id):
     connection.delete_question(question_id)
     connection.delete_answer(question_id)
-    return redirect('/')
+    return redirect('/list')
 
 
 @app.route('/question', methods=["POST", "GET"])
