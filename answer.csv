@@ -1,15 +1,10 @@
 id,submission_time,vote_number,question_id,message,image
-1,1493398154,4,1,You need to use brackets: my_list = [],
+1,1493398154,7,1,You need to use brackets: my_list = [],
 2,1493088154,35,1,Look it up in the Python docs,
-3,1655911671,0,7,"You have to add new line with text, mate",
+3,1655911671,1,7,"You have to add new line with text, mate",
 4,1655911671,0,3,"The sys module is one of the common and frequently used modules in Python. In this article, we will walk you through how to use sys argv python module. We will learn about what argv[0] and sys.argv[1] are and how they work. We will then go into how to parse Command Line options and arguments, the various ways to use sys argv and how to pass command line arguments in Python 3.x",
 5,1655911671,0,5,"Just read the csv file in memory as a list, then edit that list, and then write it back to the csv file.",
 6,1655911989,0,6,"Python is a high-level, general-purpose and a very popular programming language. Python programming language (latest Python 3) is being used in web development, Machine Learning applications, along with all cutting edge technology in Software Industry. Python Programming Language is very well suited for Beginners, also for experienced programmers with other programming languages like C++ and Java.",
 7,1656000001,0,4,"The most powerful part of Jinja is template inheritance. Template inheritance allows you to build a base ""skeleton"" template that contains all the common elements of your site and defines blocks that child templates can override.",
 8,1656000151,0,7,"Reading from a CSV file is done using the reader object. The CSV file is opened as a text file with Python built-in open() function, which returns a file object. This is then passed to the reader. Each row returned by the reader is a list of String elements containing the data found by removing the delimiters. The first row returned contains the column names, which is handled in a special way.",
-9,1656000684,0,8,"With Jinja 1.1 onwards it's possible to have a shortcut syntax for blocks with few content. The following constructs do the same:
-
-{% block title %}{{ page_title }}{% endblock %}
-
-{% block title page_title %}
-Note that as soon as you specify a second argument it's threated as short block and Jinja won't look for an closing tag.",
+9,1656000684,2,8,With Jinja 1.1 onwards it's possible to have a shortcut syntax for blocks with few content. The following constructs do the same:,

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 atomicwrites==1.4.0
 attrs==21.4.0
 autopep8==1.6.0
@@ -23,3 +24,7 @@ tomli==2.0.1
 virtualenv==20.14.1
 Werkzeug==2.1.2
 windows-curses==2.3.0
+=======
+WTForms~=3.0.1
+Flask~=2.1.2
+>>>>>>> gali
