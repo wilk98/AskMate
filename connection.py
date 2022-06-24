@@ -169,4 +169,3 @@ def top_questions():
         for item in reader:
             all_questions.append(item)
     return sorted(all_questions, key=itemgetter('view_number'), reverse=True)
-

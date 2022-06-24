@@ -9,7 +9,8 @@ Question site
 
 <div>
     <h2>{{ question_id }}. {{ title }}</h2>
-    <a href="/question/<id_question>/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
+    <a href="/question/{{ question_id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
+    <a href="/question/{{ question_id }}/vote-up" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/question/{{ question_id }}/vote-down" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
     <p>{{ message }}</p>
  {% for item in answer %}
      <p><a href="/answer/{{ item.id }}">{{ item.message }}</a>  Vote: {{ item.vote_number }}</p>

@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Answers:</title>
-    </head>
-    <body>
+{% extends 'base.html' %}
 
-    <body>
+{% block title %}
+Answer site
+{% endblock %}
+
+{% block body %}
+
+<div>
         <h1>{{ message }}</h1>
     <p>{{ submission_time }}</p>
-    <a href="/answer/{{ answer_id }}/vote-up">Vote up</a>  <a href="/answer/{{ answer_id }}/vote-down">Vote down</a><br>
+    <a href="/answer/{{ answer_id }}/vote-up" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/answer/{{ answer_id }}/vote-down" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
 
-    </body>
-</html>
+</div>
+{% endblock %}
