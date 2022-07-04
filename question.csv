@@ -1,0 +1,9 @@
+id,submission_time,view_number,vote_number,title,message,image
+1,1493368154,29,9,How to make lists in Python?,"I am totally new to this, any hints?",
+2,1523068124,15,9,Wordpress loading multiple jQuery Versions,I developed a plugin that uses the jquery booklet plugin (http://builtbywill.com/booklet/#/) this plugin binds a function to $ so I can call $('.myBook').booklet(),
+3,1533369154,3,1,sys.argv in Python,How to use sys.argv in Python?,
+4,1543378154,10,0,HTML templates,How to inherit HTML template?,
+5,1553381544,8,3,Delete from CSV,How to delete only one row in CSV with python?,
+6,1593368154,12,0,Python,Why Python is so popular?,
+7,1655911156,4,2,How to get data,How to get data from CSV,
+8,1656000648,20,3,Block shortcuts,What are block shortcuts and how do they work?,
