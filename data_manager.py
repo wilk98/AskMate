@@ -42,3 +42,14 @@ def post_question(cursor, question_detail):
          'i_e': question_detail['image']
          })
 
+@db_common.connection_handler
+def post_answer(cursor, answer):
+    cursor.execute("""INSERT INTO answer
+    (submission_time, vote_number, question_id, message, image)
+    VALUES (%(s_t)s, %(v_n)s, %(q_i)s, %(m_e)s, %(i_e)s)""",
+    {'s_t': answer['submission_time'],
+     'v_n': answer['vote_number'],
+     'q_i': answer['question_id'],
+     'm_e': answer['message'],
+     'i_e': answer['image']
+    })

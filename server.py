@@ -24,10 +24,8 @@ def show_questions():
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
     ts_epoch = (int(time.time()))
-    print(ts_epoch)
     question_to_add = {}
     if request.method == "POST":
-        question_to_add['id'] = 0
         question_to_add['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
         question_to_add['view_number'] = 0
         question_to_add['vote_number'] = 0
@@ -41,16 +39,17 @@ def add_question():
                                message=question_to_add.get('message'))
 
 
-@app.route('/question/<question_id>/new_answer', methods=['POST'])
+@app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
 def add_new_answer(question_id):
+    ts_epoch = (int(time.time()))
     answer_to_post = {}
     if request.method == 'POST':
-        answer_to_post['id'] = 0
+        answer_to_post['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
         answer_to_post['vote_number'] = 0
         answer_to_post['question_id'] = question_id
         answer_to_post['message'] = request.form['message']
-        # answer_to_post['image'] = request.form['image']
-        connection.post_answer(answer_to_post)
+        answer_to_post['image'] = request.form['image']
+        data_manager.post_answer(answer_to_post)
         return redirect('/list')
     return render_template('answer.html',
                            question_id=question_id,
