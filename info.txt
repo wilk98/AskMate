@@ -1,0 +1,22 @@
+KROR 1:
+instalacja Środowiska wirtualnego dla Windows + Vscode:
+
+ python -m venv .nazwa plika
+
+ otwieramy nową wkladkę na terminale:
+
+KROK 2:
+
+pip install python-dotenv
+
+tworzymy folder .env i dodajemy go do .gitignor OBOWIĄZKOWO
+ w folderze wpisujemy dane connectu do swojej bazy danych (stworz za pośrednictwem pgAdmin) :
+
+PSQL_USER_NAME = "Kowalski"
+PSQL_PASSWORD = "00000"
+PSQL_HOST = "localhost"
+PSQL_DB_NAME ="ask_mate"
+
+
+
+pip install psycopg2
