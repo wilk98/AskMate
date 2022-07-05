@@ -44,7 +44,7 @@ def post_question(cursor, question_detail):
 
 @db_common.connection_handler
 def post_answer(cursor, answer):
-    cursor.execute("""INSERT INTO answer
+    cursor.execute("""INSERT INTO answer\
     (submission_time, vote_number, question_id, message, image)
     VALUES (%(s_t)s, %(v_n)s, %(q_i)s, %(m_e)s, %(i_e)s)""",
     {'s_t': answer['submission_time'],
@@ -53,3 +53,15 @@ def post_answer(cursor, answer):
      'm_e': answer['message'],
      'i_e': answer['image']
     })
+
+@db_common.connection_handler
+def delete_question(cursor, question_id):
+    query = f"DELETE FROM question\
+        WHERE id = '{question_id}'"
+    return cursor.execute(query)
+
+@db_common.connection_handler
+def delete_answers(cursor, question_id):
+    query = f"DELETE FROM answer\
+        WHERE question_id = '{question_id}'"
+    return cursor.execute(query)
