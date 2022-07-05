@@ -3,6 +3,8 @@ import time
 import connection
 import csv
 
+import data_manager
+
 app = Flask(__name__)
 
 
@@ -14,7 +16,7 @@ def hello():
 
 @app.route("/list")
 def show_questions():
-    questions = connection.read_questions()
+    questions = data_manager.read_questions()
     return render_template('list.html', list=questions)
 
 
