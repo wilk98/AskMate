@@ -5,9 +5,13 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/venv" />
+      <excludePattern pattern="venv" />
     </content>
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.8 (ask-mate-2-python-wilk98)" jdkType="Python SDK" />
+=======
+    <orderEntry type="jdk" jdkName="Python 3.10 (ask-mate-2-python-wilk98)" jdkType="Python SDK" />
+>>>>>>> Maciek
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
