@@ -8,10 +8,16 @@ Question site
 {% block body %}
 
 <div>
-    <h2>{{ question_id }}. {{ title }}</h2>
+    <h2>{{ question.id }}. {{ question.title }}</h2>
     <a href="/question/<id_question>/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
-    <p>{{ message }}</p>
-    <p>{{ answer }}</p>
-    </div>
+    <h6>{{ question.message }}</h6>
+</div>
+        {% for item in answers %}
+            <div><br>
+                <p>{{ item.message }}<br>
+                {{ item.submission_time }}<br>
+                    Vote: {{ item.vote_number }}</p>
+            </div>
+        {% endfor %}
 {% endblock %}
 
