@@ -9,7 +9,7 @@ Question site
 
 <div>
     <h2>{{ question.id }}. {{ question.title }}</h2>
-    <a href="/question/<id_question>/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
+    <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
     <h6>{{ question.message }}</h6>
 </div>
         {% for item in answers %}

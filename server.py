@@ -85,8 +85,9 @@ def display_answer(answer_id):
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
-    connection.delete_question(question_id)
-    connection.delete_answer(question_id)
+    print(question_id)
+    data_manager.delete_answers(question_id)
+    data_manager.delete_question(question_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/delete')
