@@ -1,8 +1,3 @@
-
-import db_common
-
-
-
 from typing import List, Dict
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
@@ -13,9 +8,10 @@ import db_common
 @db_common.connection_handler
 def read_questions(cursor):
     query = """
-        SELECT *
+        SELECT submission_time, view_number, vote_number,
+                title, message, image
         FROM question
-        ORDER BY id"""
+        ORDER BY vote_number DESC"""
     cursor.execute(query)
     return cursor.fetchall()
 
@@ -125,3 +121,21 @@ def vote_answer_down(cursor, answer_id):
         SET vote_number = vote_number - 1\
         WHERE id = '{answer_id}'"
     return cursor.execute(query)
+
+
+@db_common.connection_handler
+def get_question_by_column(cursor, column_select, order):
+    #TODO: check column_select value to avoid SQL Injection!
+    allowed_columns = ['title', 'submission_time', 'view_number', 'vote_number', 'message']
+    if column_select not in allowed_columns:
+        column_select = 'title'
+    query = """
+            SELECT submission_time, view_number, vote_number,
+                    title, message, image
+            FROM question
+            ORDER BY """
+    query += column_select
+    if order and order in ['asc', 'desc']:
+        query += " " + order
+    cursor.execute(query)
+    return cursor.fetchall()
