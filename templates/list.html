@@ -10,6 +10,26 @@ Questions
         <h1>All Questions</h1>
          <a href="/question" class="btn btn-success btn-lg mb-4 mt-3 btn-lg active">Add new question</a>
      </div>
+    <div>
+        <form action="/list" action="GET">
+            <label for="column-select">Order by:</label>
+            <select id="column-select" name="column-select">
+                <option value=""></option>
+                <option value="title" {% if column_select=="title" %} SELECTED{% endif %}>Title</option>
+                <option value="submission_time" {% if column_select=="submission_time" %} SELECTED{% endif %}>Submission time</option>
+                <option value="message" {% if column_select=="message" %} SELECTED{% endif %}>Message</option>
+                <option value="view_number" {% if column_select=="view_number" %} SELECTED{% endif %}>Number of views</option>
+                <option value="vote_number" {% if column_select=="vote_number" %} SELECTED{% endif %}>Number of votes</option>
+            </select>
+
+                <label for="order">Show in order:</label>
+            <select id="order" name="order">
+                <option value="asc" {% if order=="asc" %}SELECTED{% endif %}>Ascending</option>
+                <option value="desc" {% if order=="desc" %}SELECTED{% endif %}>Descending</option>
+            </select>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
                  {% for item in list %}
                      <div class="alert alert-secondary">
                      <div class="d-flex justify-content-start align-items-center">

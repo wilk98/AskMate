@@ -75,6 +75,7 @@ def get_answer(question_id):
                 answers.append(item)
     return answers
 
+
 def get_answer_one(answer_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
@@ -83,7 +84,6 @@ def get_answer_one(answer_id):
                 ts_epoch = int(item['submission_time'])
                 item['submission_time'] = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
                 return item
-
 
 
 def post_answer(answer):
@@ -172,6 +172,7 @@ def vote_answer_down(answer_id):
         writer = csv.DictWriter(writeFile, ANSWER_HEADER)
         writer.writeheader()
         writer.writerows(answer_list)
+
 
 def top_questions():
     all_questions = []
