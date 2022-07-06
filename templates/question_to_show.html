@@ -18,7 +18,7 @@ Question site
                 <p>{{ item.message }}
                     <a href ="/answer/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a> <br>
                 {{ item.submission_time }}<br>
-                    Vote: {{ item.vote_number }}</p>
+                    Vote: {{ item.vote_number }}</p><a href="/answer/{{ item.id }}/edit" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" >Edit answer</a>
             </div>
         {% endfor %}
 {% endblock %}
