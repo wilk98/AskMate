@@ -3,6 +3,8 @@ import time
 import connection
 import csv
 import data_manager
+from datetime import datetime
+import time
 
 import data_manager
 
@@ -23,32 +25,33 @@ def show_questions():
 
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
+    ts_epoch = (int(time.time()))
     question_to_add = {}
     if request.method == "POST":
-        question_to_add['id'] = 0
-        question_to_add['submission_time'] = int(time.time())
+        question_to_add['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
         question_to_add['view_number'] = 0
         question_to_add['vote_number'] = 0
         question_to_add['title'] = request.form['title']
         question_to_add['message'] = request.form['message']
-        # question_to_add['image'] = request.form["image"]
-        connection.post_question(question_to_add)
+        question_to_add['image'] = request.form['image']
+        data_manager.post_question(question_to_add)
         return redirect('/list')
     else:
         return render_template('question.html', title=question_to_add.get('title'),
                                message=question_to_add.get('message'))
 
 
-@app.route('/question/<question_id>/new_answer', methods=['GET', 'POST'])
+@app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
 def add_new_answer(question_id):
+    ts_epoch = (int(time.time()))
     answer_to_post = {}
     if request.method == 'POST':
-        answer_to_post['id'] = 0
+        answer_to_post['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
         answer_to_post['vote_number'] = 0
         answer_to_post['question_id'] = question_id
         answer_to_post['message'] = request.form['message']
-        # answer_to_post['image'] = request.form['image']
-        connection.post_answer(answer_to_post)
+        answer_to_post['image'] = request.form['image']
+        data_manager.post_answer(answer_to_post)
         return redirect('/list')
     return render_template('answer.html',
                            question_id=question_id,
@@ -64,72 +67,46 @@ def add_new_answer(question_id):
 
 @app.route('/question/<question_id>')
 def display_question(question_id):
-    question_to_show = connection.get_question(question_id)
-    answers_to_show = connection.get_answer(question_id)
-    if answers_to_show != None:
-        return render_template('question_to_show.html', question_id=question_id,
-                               submission_time=question_to_show.get('submission_time'),
-                               view_number=question_to_show.get('view_number'),
-                               vote_number=question_to_show.get('vote_number'),
-                               title=question_to_show.get('title'),
-                               message=question_to_show.get('message'),
-                               image=question_to_show.get('image'),
-                               answer=answers_to_show,
-                               )
-    else:
-        return render_template('question_to_show.html', question_id=question_id,
-                               submission_time=question_to_show.get('submission_time'),
-                               view_number=question_to_show.get('view_number'),
-                               vote_number=question_to_show.get('vote_number'),
-                               title=question_to_show.get('title'),
-                               message=question_to_show.get('message'),
-                               image=question_to_show.get('image'),
-                               answer= "No answer yet"
-                               )
+    question_to_show = data_manager.get_question(question_id)
+    answers_to_show = data_manager.get_answers(question_id)
+    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show)
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
-    answer_to_show = connection.get_answer_one(answer_id)
-    return render_template('answer_to_show.html', answer_id=answer_id,
-                               submission_time=answer_to_show.get('submission_time'),
-                               vote_number=answer_to_show.get('vote_number'),
-                               question_id=answer_to_show.get('question_id'),
-                               message=answer_to_show.get('message'),
-                               image=answer_to_show.get('image'),
-                               )
+    answer_to_show = data_manager.get_answer(answer_id)
+    return render_template('answer_to_show.html', answer=answer_to_show[0])
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
-    connection.delete_question(question_id)
-    connection.delete_answer(question_id)
+    print(question_id)
+    data_manager.delete_answers(question_id)
+    data_manager.delete_question(question_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
-    connection.delete_answer_one(answer_id)
+    data_manager.delete_answer(answer_id)
     return redirect('/list')
-
-
 
 @app.route('/question/<question_id>/vote-up')
 def que_vote_up(question_id):
-    connection.vote_question_up(question_id)
+    data_manager.vote_question_up(question_id)
     return redirect('/list')
 
 @app.route('/question/<question_id>/vote-down')
 def que_vote_down(question_id):
-    connection.vote_question_down(question_id)
+    data_manager.vote_question_down(question_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/vote-up')
 def ans_vote_up(answer_id):
-    connection.vote_answer_up(answer_id)
+    data_manager.vote_answer_up(answer_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/vote-down')
 def ans_vote_down(answer_id):
-    connection.vote_answer_down(answer_id)
+    data_manager.vote_answer_down(answer_id)
     return redirect('/list')
 
 @app.route("/team")
