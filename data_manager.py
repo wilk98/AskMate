@@ -4,6 +4,7 @@ from psycopg2.extras import RealDictCursor
 
 import db_common
 
+
 @db_common.connection_handler
 def read_questions(cursor):
     query = """
@@ -13,6 +14,7 @@ def read_questions(cursor):
     cursor.execute(query)
     return cursor.fetchall()
 
+
 @db_common.connection_handler
 def get_question(cursor, question_id):
     query = f"SELECT *  \
@@ -20,6 +22,7 @@ def get_question(cursor, question_id):
             WHERE id = '{question_id}'"
     cursor.execute(query)
     return cursor.fetchall()
+
 
 @db_common.connection_handler
 def get_answers(cursor, question_id):
@@ -29,6 +32,7 @@ def get_answers(cursor, question_id):
     cursor.execute(query)
     return cursor.fetchall()
 
+
 @db_common.connection_handler
 def get_answer(cursor, answer_id):
     query = f"SELECT *\
@@ -36,6 +40,7 @@ def get_answer(cursor, answer_id):
         WHERE id = '{answer_id}'"
     cursor.execute(query)
     return cursor.fetchall()
+
 
 @db_common.connection_handler
 def post_question(cursor, question_detail):
@@ -50,6 +55,7 @@ def post_question(cursor, question_detail):
          'i_e': question_detail['image']
          })
 
+
 @db_common.connection_handler
 def post_answer(cursor, answer):
     cursor.execute("""INSERT INTO answer\
@@ -62,11 +68,13 @@ def post_answer(cursor, answer):
      'i_e': answer['image']
     })
 
+
 @db_common.connection_handler
 def delete_question(cursor, question_id):
     query = f"DELETE FROM question\
         WHERE id = '{question_id}'"
     return cursor.execute(query)
+
 
 @db_common.connection_handler
 def delete_answers(cursor, question_id):
@@ -74,11 +82,13 @@ def delete_answers(cursor, question_id):
         WHERE question_id = '{question_id}'"
     return cursor.execute(query)
 
+
 @db_common.connection_handler
 def delete_answer(cursor, answer_id):
     query = f"DELETE FROM answer\
         WHERE id = '{answer_id}'"
     return cursor.execute(query)
+
 
 @db_common.connection_handler
 def vote_question_up(cursor, question_id):
@@ -87,6 +97,7 @@ def vote_question_up(cursor, question_id):
         WHERE id = '{question_id}'"
     return cursor.execute(query)
 
+
 @db_common.connection_handler
 def vote_question_down(cursor, question_id):
     query = f"UPDATE question\
@@ -94,12 +105,14 @@ def vote_question_down(cursor, question_id):
         WHERE id = '{question_id}'"
     return cursor.execute(query)
 
+
 @db_common.connection_handler
 def vote_answer_up(cursor, answer_id):
     query = f"UPDATE answer\
         SET vote_number = vote_number + 1\
         WHERE id = '{answer_id}'"
     return cursor.execute(query)
+
 
 @db_common.connection_handler
 def vote_answer_down(cursor, answer_id):
