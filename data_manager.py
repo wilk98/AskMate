@@ -8,7 +8,7 @@ import db_common
 @db_common.connection_handler
 def read_questions(cursor):
     query = """
-        SELECT submission_time, view_number, vote_number,
+        SELECT id, submission_time, view_number, vote_number,
                 title, message, image
         FROM question
         ORDER BY vote_number DESC"""
@@ -18,19 +18,19 @@ def read_questions(cursor):
 
 @db_common.connection_handler
 def get_question(cursor, question_id):
-    query = f"SELECT *  \
-            FROM question\
-            WHERE id = '{question_id}'"
-    cursor.execute(query)
+    query = """SELECT *  
+            FROM question
+            WHERE id = %s"""
+    cursor.execute(query, (question_id,))
     return cursor.fetchall()
 
 
 @db_common.connection_handler
 def get_answers(cursor, question_id):
-    query = f"SELECT *  \
-            FROM answer\
-            WHERE question_id = '{question_id}'"
-    cursor.execute(query)
+    query = """SELECT *  
+            FROM answer
+            WHERE question_id = %s"""
+    cursor.execute(query, (question_id,))
     return cursor.fetchall()
 
 
@@ -130,7 +130,7 @@ def get_question_by_column(cursor, column_select, order):
     if column_select not in allowed_columns:
         column_select = 'title'
     query = """
-            SELECT submission_time, view_number, vote_number,
+            SELECT id, submission_time, view_number, vote_number,
                     title, message, image
             FROM question
             ORDER BY """
