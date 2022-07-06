@@ -108,6 +108,7 @@ def ans_vote_down(answer_id):
 
 @app.route('/question/<question_id>/edit', methods=["POST", 'GET'])
 def edit_question(question_id):
+    print(question_id)
     question_to_edit = {}
     if request.method == "POST":
         question_to_edit['id'] = question_id
@@ -118,8 +119,8 @@ def edit_question(question_id):
         return redirect('/list')
     else:
         print(question_id)
-        return render_template('question.html', title=question_to_edit.get('title'),
-                               message=question_to_edit.get('message'))
+        return render_template('edit_question.html', title=question_to_edit.get('title'),
+                               message=question_to_edit.get('message'), question_id=question_id)
 
 
 

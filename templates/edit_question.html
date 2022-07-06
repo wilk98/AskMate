@@ -8,7 +8,7 @@
 
 {% block body %}
      <h2>Edit a question</h2>
-         <form class="form-group col-lg-5" action="/question/{{question.id}}/edit" method="post">
+         <form class="form-group col-lg-5" action="/question/{{ question_id }}/edit" method="post">
             <label  >Title: </label><br>
              <input  class="form-control col-lg-6" type="text" name="title"/><br>
              <label>Question: </label> <br>

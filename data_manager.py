@@ -111,7 +111,6 @@ def vote_answer_down(cursor, answer_id):
 @db_common.connection_handler
 def edit_question(cursor, question_to_edit):
     query = f"UPDATE question\
-        SET title = '{question_to_edit['title']}', message = '{question_to_edit['message']}', image = '{question_to_edit['image']}' \ \
-        WHERE id = '{question_to_edit['id']}'"
-    print(question_to_edit)
+        SET title = '{question_to_edit['title']}', message = '{question_to_edit['message']}', image = '{question_to_edit['image']}'\
+        WHERE id = '{question_to_edit['id']}';"
     return cursor.execute(query)
