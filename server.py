@@ -1,8 +1,12 @@
 from flask import Flask, render_template, request, redirect
-import time
 import connection
+<<<<<<< HEAD
 import data_manager
+=======
+>>>>>>> 9af9a629b3441288aaedf0ea927c293bfd047fa8
 from datetime import datetime
+
+import data_manager
 
 app = Flask(__name__)
 
@@ -15,8 +19,13 @@ def hello():
 
 @app.route("/list")
 def show_questions():
-    questions = data_manager.read_questions()
-    return render_template('list.html', list=questions)
+    order_by_column = request.args.get('column-select')
+    dir = request.args.get('order')
+    if order_by_column:
+        questions = data_manager.get_question_by_column(order_by_column, dir)
+    else:
+        questions = data_manager.read_questions()
+    return render_template('list.html', list=questions, column_select=order_by_column, order=dir)
 
 
 @app.route('/question', methods=["POST", "GET"])
@@ -87,6 +96,7 @@ def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     return render_template('answer_to_show.html', answer=answer_to_show[0])
 
+
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
     print(question_id)
@@ -94,25 +104,30 @@ def delete_question(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')
 
+
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
     return redirect('/list')
+
 
 @app.route('/question/<question_id>/vote-up')
 def que_vote_up(question_id):
     data_manager.vote_question_up(question_id)
     return redirect('/list')
 
+
 @app.route('/question/<question_id>/vote-down')
 def que_vote_down(question_id):
     data_manager.vote_question_down(question_id)
     return redirect('/list')
 
+
 @app.route('/answer/<answer_id>/vote-up')
 def ans_vote_up(answer_id):
     data_manager.vote_answer_up(answer_id)
     return redirect('/list')
+
 
 @app.route('/answer/<answer_id>/vote-down')
 def ans_vote_down(answer_id):
@@ -120,6 +135,7 @@ def ans_vote_down(answer_id):
     return redirect('/list')
 
 
+<<<<<<< HEAD
 @app.route('/question/<question_id>/edit', methods=["POST", 'GET'])
 def edit_question(question_id):
     question_to_edit = {}
@@ -157,6 +173,8 @@ def add_tag(question_id):
         return render_template('tag.html')
 
 
+=======
+>>>>>>> 9af9a629b3441288aaedf0ea927c293bfd047fa8
 @app.route("/team")
 def team_site():
     return render_template('team.html')
@@ -171,8 +189,6 @@ def home_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
-
-
 
 
 if __name__ == "__main__":
