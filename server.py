@@ -66,22 +66,14 @@ def add_new_answer(question_id):
 @app.route('/question/<question_id>')
 def display_question(question_id):
     question_to_show = data_manager.get_question(question_id)
-    print(question_to_show)
     answers_to_show = data_manager.get_answers(question_id)
-    print(answers_to_show)
     return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show)
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
-    answer_to_show = connection.get_answer_one(answer_id)
-    return render_template('answer_to_show.html', answer_id=answer_id,
-                               submission_time=answer_to_show.get('submission_time'),
-                               vote_number=answer_to_show.get('vote_number'),
-                               question_id=answer_to_show.get('question_id'),
-                               message=answer_to_show.get('message'),
-                               image=answer_to_show.get('image'),
-                               )
+    answer_to_show = data_manager.get_answer(answer_id)
+    return render_template('answer_to_show.html', answer=answer_to_show[0])
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
