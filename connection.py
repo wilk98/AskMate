@@ -53,7 +53,7 @@ def delete_answer(question_id):
         writer.writeheader()
         writer.writerows(answers_list)
 
-def delete_answer_one(answer_id):
+#def delete_answer_one(answer_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         answers_list = []
@@ -111,7 +111,7 @@ def post_question(question):
         writer.writerow(question)
 
 
-def vote_question_up(question_id):
+#def vote_question_up(question_id):
     with open('question.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         questions_list = []
@@ -127,7 +127,7 @@ def vote_question_up(question_id):
         writer.writerows(questions_list)
 
 
-def vote_question_down(question_id):
+#def vote_question_down(question_id):
     with open('question.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         questions_list = []
@@ -143,7 +143,7 @@ def vote_question_down(question_id):
         writer.writerows(questions_list)
 
 
-def vote_answer_up(answer_id):
+#def vote_answer_up(answer_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         answer_list = []
@@ -159,7 +159,7 @@ def vote_answer_up(answer_id):
         writer.writerows(answer_list)
 
 
-def vote_answer_down(answer_id):
+#def vote_answer_down(answer_id):
     with open('answer.csv', 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         answer_list = []

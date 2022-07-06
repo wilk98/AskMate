@@ -74,4 +74,9 @@ def delete_answers(cursor, question_id):
         WHERE question_id = '{question_id}'"
     return cursor.execute(query)
 
+@db_common.connection_handler
+def delete_answer(cursor, answer_id):
+    query = f"DELETE FROM answer\
+        WHERE id = '{answer_id}'"
+    return cursor.execute(query)
 
