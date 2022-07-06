@@ -80,3 +80,30 @@ def delete_answer(cursor, answer_id):
         WHERE id = '{answer_id}'"
     return cursor.execute(query)
 
+@db_common.connection_handler
+def vote_question_up(cursor, question_id):
+    query = f"UPDATE question\
+        SET vote_number = vote_number + 1\
+        WHERE id = '{question_id}'"
+    return cursor.execute(query)
+
+@db_common.connection_handler
+def vote_question_down(cursor, question_id):
+    query = f"UPDATE question\
+        SET vote_number = vote_number - 1\
+        WHERE id = '{question_id}'"
+    return cursor.execute(query)
+
+@db_common.connection_handler
+def vote_answer_up(cursor, answer_id):
+    query = f"UPDATE answer\
+        SET vote_number = vote_number + 1\
+        WHERE id = '{answer_id}'"
+    return cursor.execute(query)
+
+@db_common.connection_handler
+def vote_answer_down(cursor, answer_id):
+    query = f"UPDATE answer\
+        SET vote_number = vote_number - 1\
+        WHERE id = '{answer_id}'"
+    return cursor.execute(query)

@@ -87,26 +87,24 @@ def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
     return redirect('/list')
 
-
-
 @app.route('/question/<question_id>/vote-up')
 def que_vote_up(question_id):
-    connection.vote_question_up(question_id)
+    data_manager.vote_question_up(question_id)
     return redirect('/list')
 
 @app.route('/question/<question_id>/vote-down')
 def que_vote_down(question_id):
-    connection.vote_question_down(question_id)
+    data_manager.vote_question_down(question_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/vote-up')
 def ans_vote_up(answer_id):
-    connection.vote_answer_up(answer_id)
+    data_manager.vote_answer_up(answer_id)
     return redirect('/list')
 
 @app.route('/answer/<answer_id>/vote-down')
 def ans_vote_down(answer_id):
-    connection.vote_answer_down(answer_id)
+    data_manager.vote_answer_down(answer_id)
     return redirect('/list')
 
 @app.route("/team")
