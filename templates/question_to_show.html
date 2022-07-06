@@ -8,7 +8,7 @@ Question site
 {% block body %}
 
 <div>
-    <h2>{{ question.id }}. {{ question.title }}</h2>
+    <h2>{{ question.title }}</h2>
     <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
     <a href="/question/{{ question.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/question/{{ question.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
     <h6>{{ question.message }}</h6>
