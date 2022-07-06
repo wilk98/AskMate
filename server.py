@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect
-import time
 import connection
-import csv
 import data_manager
 from datetime import datetime
 import time
@@ -75,6 +73,7 @@ def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     return render_template('answer_to_show.html', answer=answer_to_show[0])
 
+
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id):
     print(question_id)
@@ -82,30 +81,36 @@ def delete_question(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')
 
+
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
     return redirect('/list')
+
 
 @app.route('/question/<question_id>/vote-up')
 def que_vote_up(question_id):
     data_manager.vote_question_up(question_id)
     return redirect('/list')
 
+
 @app.route('/question/<question_id>/vote-down')
 def que_vote_down(question_id):
     data_manager.vote_question_down(question_id)
     return redirect('/list')
+
 
 @app.route('/answer/<answer_id>/vote-up')
 def ans_vote_up(answer_id):
     data_manager.vote_answer_up(answer_id)
     return redirect('/list')
 
+
 @app.route('/answer/<answer_id>/vote-down')
 def ans_vote_down(answer_id):
     data_manager.vote_answer_down(answer_id)
     return redirect('/list')
+
 
 @app.route("/team")
 def team_site():
@@ -121,8 +126,6 @@ def home_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
-
-
 
 
 if __name__ == "__main__":
