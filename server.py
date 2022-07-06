@@ -108,7 +108,6 @@ def ans_vote_down(answer_id):
 
 @app.route('/question/<question_id>/edit', methods=["POST", 'GET'])
 def edit_question(question_id):
-    print(question_id)
     question_to_edit = {}
     if request.method == "POST":
         question_to_edit['id'] = question_id
@@ -118,10 +117,20 @@ def edit_question(question_id):
         data_manager.edit_question(question_to_edit)
         return redirect('/list')
     else:
-        print(question_id)
-        return render_template('edit_question.html', title=question_to_edit.get('title'),
-                               message=question_to_edit.get('message'), question_id=question_id)
+        return render_template('edit_question.html', question_id=question_id)
 
+
+@app.route('/answer/<answer_id>/edit', methods=["POST", 'GET'])
+def edit_answer(answer_id):
+    answer_to_edit = {}
+    if request.method == "POST":
+        answer_to_edit['id'] = answer_id
+        answer_to_edit['message'] = request.form['message']
+        answer_to_edit['image'] = request.form['image']
+        data_manager.edit_answer(answer_to_edit)
+        return redirect('/list')
+    else:
+        return render_template('edit_answer.html', answer_id=answer_id)
 
 
 @app.route("/team")

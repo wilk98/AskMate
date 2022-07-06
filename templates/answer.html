@@ -8,9 +8,6 @@
 {% block body %}
         <h2>Answer question:</h2>
         <form class="form-group col-lg-5"  action="/question/{{ question_id }}/new_answer" method="post">
-            <label  >Title: </label><br>
-            <label  for="title">{% block quest_title %}{% endblock %}</label><br>
-            <textarea class="form-control col-lg-6" id="title" name="title" rows="1" cols="40">{{ title if title }}</textarea>
             <label  >Answer: </label><br>
             <label for="message">{% block message %}{% endblock %}</label><br>
             <textarea  class="form-control col-lg-6" id="message" name="message" rows="4" cols="60">{{ message if message }}</textarea>

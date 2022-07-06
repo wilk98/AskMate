@@ -114,3 +114,10 @@ def edit_question(cursor, question_to_edit):
         SET title = '{question_to_edit['title']}', message = '{question_to_edit['message']}', image = '{question_to_edit['image']}'\
         WHERE id = '{question_to_edit['id']}';"
     return cursor.execute(query)
+
+@db_common.connection_handler
+def edit_answer(cursor, answer_to_edit):
+    query = f"UPDATE answer\
+        SET message = '{answer_to_edit['message']}', image = '{answer_to_edit['image']}'\
+        WHERE id = '{answer_to_edit['id']}';"
+    return cursor.execute(query)
