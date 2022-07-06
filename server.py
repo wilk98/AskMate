@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect
 import connection
-import data_manager
 from datetime import datetime
 import time
 
