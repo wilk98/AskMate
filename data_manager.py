@@ -38,6 +38,22 @@ def get_answer(cursor, answer_id):
     return cursor.fetchall()
 
 @db_common.connection_handler
+def get_tag_id(cursor, question_id):
+    query = f"SELECT tag_id\
+        FROM question_tag\
+        WHERE question_id = '{question_id}'"
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@db_common.connection_handler
+def get_tag(cursor, tag_id):
+    query = f"SELECT name\
+        FROM tag\
+        WHERE id = '{tag_id}'"
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
         (submission_time, view_number, vote_number, title, message, image)
@@ -121,3 +137,10 @@ def edit_answer(cursor, answer_to_edit):
         SET message = '{answer_to_edit['message']}', image = '{answer_to_edit['image']}'\
         WHERE id = '{answer_to_edit['id']}';"
     return cursor.execute(query)
+
+@db_common.connection_handler
+def add_tag(cursor, new_tag):
+    cursor.execute(f"""INSERT INTO tag
+        (name)
+        VALUES ('{new_tag}')"""
+    )

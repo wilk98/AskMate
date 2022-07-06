@@ -65,7 +65,21 @@ def add_new_answer(question_id):
 def display_question(question_id):
     question_to_show = data_manager.get_question(question_id)
     answers_to_show = data_manager.get_answers(question_id)
-    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show)
+    tag_id = data_manager.get_tag_id(question_id)
+    tag_list = [row["tag_id"] for row in tag_id]
+    tags_to_show = []
+    for i in tag_list:
+        tag_to_show = data_manager.get_tag(i)
+        tags_list = [row["name"] for row in tag_to_show]
+        tags_to_show.append(tags_list[0])
+    all_tags=[]
+    for i in tags_to_show:
+        if i[0] != "#":
+            i = "#" + i
+            all_tags.append(i)
+        else:
+            all_tags.append(i)
+    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show, tag=all_tags)
 
 
 @app.route("/answer/<answer_id>")
@@ -115,7 +129,7 @@ def edit_question(question_id):
         question_to_edit['message'] = request.form['message']
         question_to_edit['image'] = request.form['image']
         data_manager.edit_question(question_to_edit)
-        return redirect('/list')
+        return redirect(f'/question/{question_id}')
     else:
         return render_template('edit_question.html', question_id=question_id)
 
@@ -128,9 +142,19 @@ def edit_answer(answer_id):
         answer_to_edit['message'] = request.form['message']
         answer_to_edit['image'] = request.form['image']
         data_manager.edit_answer(answer_to_edit)
-        return redirect('/list')
+        return redirect(f'/answer/{answer_id}')
     else:
         return render_template('edit_answer.html', answer_id=answer_id)
+
+
+@app.route("/question/<question_id>/new-tag", methods=["POST", 'GET'])
+def add_tag(question_id):
+    if request.method == "POST":
+        new_tag = request.form['tag']
+        data_manager.add_tag(new_tag)
+        return redirect(f'/question/{question_id}')
+    else:
+        return render_template('tag.html')
 
 
 @app.route("/team")

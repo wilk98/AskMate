@@ -9,6 +9,10 @@ Question site
 
 <div>
     <h2>{{ question.title }}</h2>
+    {% for item in tag %}
+        <p>{{ item }}</p>
+    {% endfor %}
+    <a href="/question/{{ question.id }}/new-tag" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Add tag</a> <br>
     <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><a href="/question/{{ question.id }}/edit" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" >Edit question</a><br>
     <a href="/question/{{ question.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/question/{{ question.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
     <h6>{{ question.message }}</h6>
@@ -18,7 +22,7 @@ Question site
                 <p>{{ item.message }}
                     <a href ="/answer/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a> <br>
                 {{ item.submission_time }}<br>
-                    Vote: {{ item.vote_number }}</p><a href="/answer/{{ item.id }}/edit" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" >Edit answer</a>
+                    Vote: {{ item.vote_number }}</p>
             </div>
         {% endfor %}
 {% endblock %}
