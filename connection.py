@@ -83,7 +83,6 @@ def get_answer_one(answer_id):
                 ts_epoch = int(item['submission_time'])
                 item['submission_time'] = datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
                 return item
-#def delete_answer():
 
 
 
