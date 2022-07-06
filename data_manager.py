@@ -30,6 +30,14 @@ def get_answers(cursor, question_id):
     return cursor.fetchall()
 
 @db_common.connection_handler
+def get_answer(cursor, answer_id):
+    query = f"SELECT *\
+        FROM answer\
+        WHERE id = '{answer_id}'"
+    cursor.execute(query)
+    return cursor.fetchall()
+
+@db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
         (submission_time, view_number, vote_number, title, message, image)
@@ -65,3 +73,5 @@ def delete_answers(cursor, question_id):
     query = f"DELETE FROM answer\
         WHERE question_id = '{question_id}'"
     return cursor.execute(query)
+
+

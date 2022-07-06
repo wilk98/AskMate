@@ -10,11 +10,13 @@ Question site
 <div>
     <h2>{{ question.id }}. {{ question.title }}</h2>
     <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><br>
+    <a href="/answer/{{ question.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/answer/{{ question.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
     <h6>{{ question.message }}</h6>
 </div>
         {% for item in answers %}
             <div><br>
-                <p>{{ item.message }}<br>
+                <p>{{ item.message }}
+                    <a href ="/answer/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a> <br>
                 {{ item.submission_time }}<br>
                     Vote: {{ item.vote_number }}</p>
             </div>
