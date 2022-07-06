@@ -1,10 +1,8 @@
 from flask import Flask, render_template, request, redirect
 import time
 import connection
-import csv
 import data_manager
 from datetime import datetime
-import time
 
 app = Flask(__name__)
 
