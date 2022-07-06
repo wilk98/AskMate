@@ -4,6 +4,8 @@ import data_manager
 from datetime import datetime
 import time
 
+import data_manager
+
 app = Flask(__name__)
 
 
