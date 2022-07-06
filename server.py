@@ -16,8 +16,13 @@ def hello():
 
 @app.route("/list")
 def show_questions():
-    questions = data_manager.read_questions()
-    return render_template('list.html', list=questions)
+    order_by_column = request.args.get('column-select')
+    dir = request.args.get('order')
+    if order_by_column:
+        questions = data_manager.get_question_by_column(order_by_column, dir)
+    else:
+        questions = data_manager.read_questions()
+    return render_template('list.html', list=questions, column_select=order_by_column, order=dir)
 
 
 @app.route('/question', methods=["POST", "GET"])
