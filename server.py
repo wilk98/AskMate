@@ -1,9 +1,10 @@
 from flask import Flask, render_template, request, redirect
 import connection
-<<<<<<< HEAD
+
+import time
+
 import data_manager
-=======
->>>>>>> 9af9a629b3441288aaedf0ea927c293bfd047fa8
+
 from datetime import datetime
 
 import data_manager
@@ -63,6 +64,27 @@ def add_new_answer(question_id):
                            message='')
 
 
+@app.route('/answer/<answer_id>/new-comment', methods=['POST', 'GET'])
+def add_comment_answer(answer_id):
+    ts_epoch = (int(time.time()))
+    comment_to_post = {}
+    if request.method == 'POST':
+        comment_to_post['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+        comment_to_post['message'] = request.form['comment']
+        comment_to_post['edited_count'] = 0
+        comment_to_post['answer_id'] = answer_id
+        comment_to_post['question_id'] = 1
+        data_manager.post_comment(comment_to_post)
+
+        return redirect('/list')
+    return render_template('comment.html', answer_id=answer_id)
+
+
+
+
+
+
+
 # @app.route("/question/<question_id>")
 # def route_new_answer(question_id):
 #     answer_to_display = connection.get_answer(question_id)
@@ -94,7 +116,9 @@ def display_question(question_id):
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
-    return render_template('answer_to_show.html', answer=answer_to_show[0])
+    comment_to_show = data_manager.get_comment(answer_id)
+    print(comment_to_show)
+    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show[0])
 
 
 @app.route('/question/<question_id>/delete')
@@ -135,7 +159,6 @@ def ans_vote_down(answer_id):
     return redirect('/list')
 
 
-<<<<<<< HEAD
 @app.route('/question/<question_id>/edit', methods=["POST", 'GET'])
 def edit_question(question_id):
     question_to_edit = {}
@@ -173,8 +196,6 @@ def add_tag(question_id):
         return render_template('tag.html')
 
 
-=======
->>>>>>> 9af9a629b3441288aaedf0ea927c293bfd047fa8
 @app.route("/team")
 def team_site():
     return render_template('team.html')

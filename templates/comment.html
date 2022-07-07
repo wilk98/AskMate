@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    add comment to answer
+{% endblock %}
+
+
+{% block body %}
+     <h2>add comment to answer</h2>
+         <form class="form-group col-lg-5" action="/answer/{{answer_id}}/new-comment" method="post">
+            <label>comment: </label><br>
+             <input  class="form-control col-lg-6" type="text" name="comment"/><br>
+
+            <button type="submit" class="btn btn-success mt-4 btn-lg"><strong>Send</strong></button>
+
+        </form>
+
+{% endblock %}
