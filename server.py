@@ -1,12 +1,7 @@
 from flask import Flask, render_template, request, redirect
 import connection
-
 import time
-
-import data_manager
-
 from datetime import datetime
-
 import data_manager
 
 app = Flask(__name__)
@@ -21,12 +16,12 @@ def hello():
 @app.route("/list")
 def show_questions():
     order_by_column = request.args.get('column-select')
-    dir = request.args.get('order')
+    direction = request.args.get('order')
     if order_by_column:
-        questions = data_manager.get_question_by_column(order_by_column, dir)
+        questions = data_manager.get_question_by_column(order_by_column, direction)
     else:
         questions = data_manager.read_questions()
-    return render_template('list.html', list=questions, column_select=order_by_column, order=dir)
+    return render_template('list.html', list=questions, column_select=order_by_column, order=direction)
 
 
 @app.route('/question', methods=["POST", "GET"])
@@ -73,7 +68,6 @@ def add_comment_answer(answer_id):
         comment_to_post['message'] = request.form['comment']
         comment_to_post['edited_count'] = 0
         comment_to_post['answer_id'] = answer_id
-        comment_to_post['question_id'] = 1
         data_manager.post_comment(comment_to_post)
 
         return redirect('/list')

@@ -68,6 +68,7 @@ def get_tag(cursor, tag_id):
     cursor.execute(query, (tag_id,))
     return cursor.fetchall()
 
+
 @db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
@@ -94,21 +95,18 @@ def post_answer(cursor, answer):
      'i_e': answer['image']
     })
 
+
 @db_common.connection_handler
 def post_comment(cursor, comment):
-    cursor.execute("""INSERT INTO comment\
-        (question_id,answer_id,message,submission_time, edited_count)
-        VALUES (%(q_i)s, %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
-
+    cursor.execute("""INSERT INTO comment
+        (question_id, answer_id, message, submission_time, edited_count)
+        VALUES ((SELECT question_id FROM answer WHERE id=%(a_i)s), %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
                    {
-                       'q_i': comment['question_id'],
                        'a_i': comment['answer_id'],
                        'm_e': comment['message'],
                        's_t': comment['submission_time'],
                        'e_c': comment['edited_count'],
                    })
-
-
 
 
 @db_common.connection_handler
