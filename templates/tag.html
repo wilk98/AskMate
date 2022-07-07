@@ -8,10 +8,10 @@
 
 {% block body %}
      <h2>Add tag</h2>
-         <form class="form-group col-lg-5" action="/question/<question_id>/new-tag" method="post">
-            <label  >Tag: </label><br>
+         <form class="form-group col-lg-5" action="/question/{{ question_id }}/new-tag" method="post">
+             <label  >Tag: </label><br>
              <input  class="form-control col-lg-6" type="text" name="tag"/><br>
-
+             <button type="submit" class="btn btn-success mt-4 btn-lg"><strong>Send</strong></button>
         </form>
 
 {% endblock %}
