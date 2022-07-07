@@ -43,11 +43,19 @@ def get_answer(cursor, answer_id):
     return cursor.fetchall()
 
 @db_common.connection_handler
-def get_comment(cursor, answer_id):
+def get_comment_answer(cursor, answer_id):
     query = """SELECT *
         FROM comment
         WHERE answer_id = %s"""
     cursor.execute(query, (answer_id,))
+    return cursor.fetchall()
+
+@db_common.connection_handler
+def get_comment_question(cursor, question_id):
+    query = """SELECT *
+        FROM comment
+        WHERE question_id = %s"""
+    cursor.execute(query, (question_id,))
     return cursor.fetchall()
 
 
@@ -97,12 +105,25 @@ def post_answer(cursor, answer):
 
 
 @db_common.connection_handler
-def post_comment(cursor, comment):
+def post_comment_answer(cursor, comment):
     cursor.execute("""INSERT INTO comment
-        (question_id, answer_id, message, submission_time, edited_count)
-        VALUES ((SELECT question_id FROM answer WHERE id=%(a_i)s), %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
+        (answer_id, message, submission_time, edited_count)
+        VALUES ( %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
                    {
                        'a_i': comment['answer_id'],
+                       'm_e': comment['message'],
+                       's_t': comment['submission_time'],
+                       'e_c': comment['edited_count'],
+                   })
+
+
+@db_common.connection_handler
+def post_comment_question(cursor, comment):
+    cursor.execute("""INSERT INTO comment
+        (question_id, message, submission_time, edited_count)
+        VALUES ( %(q_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
+                   {
+                       'q_i': comment['question_id'],
                        'm_e': comment['message'],
                        's_t': comment['submission_time'],
                        'e_c': comment['edited_count'],

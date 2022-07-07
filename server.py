@@ -59,6 +59,21 @@ def add_new_answer(question_id):
                            message='')
 
 
+@app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
+def add_comment_question(question_id):
+    ts_epoch = (int(time.time()))
+    comment_to_post = {}
+    if request.method == 'POST':
+        comment_to_post['submission_time'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+        comment_to_post['message'] = request.form['comment']
+        comment_to_post['edited_count'] = 0
+        comment_to_post['question_id'] = question_id
+        data_manager.post_comment_question(comment_to_post)
+
+        return redirect('/list')
+    return render_template('comment_question.html', question_id=question_id)
+
+
 @app.route('/answer/<answer_id>/new-comment', methods=['POST', 'GET'])
 def add_comment_answer(answer_id):
     ts_epoch = (int(time.time()))
@@ -68,10 +83,10 @@ def add_comment_answer(answer_id):
         comment_to_post['message'] = request.form['comment']
         comment_to_post['edited_count'] = 0
         comment_to_post['answer_id'] = answer_id
-        data_manager.post_comment(comment_to_post)
+        data_manager.post_comment_answer(comment_to_post)
 
         return redirect('/list')
-    return render_template('comment.html', answer_id=answer_id)
+    return render_template('comment_answer.html', answer_id=answer_id)
 
 
 
@@ -90,6 +105,7 @@ def add_comment_answer(answer_id):
 def display_question(question_id):
     question_to_show = data_manager.get_question(question_id)
     answers_to_show = data_manager.get_answers(question_id)
+    comment_to_show = data_manager.get_comment_question(question_id)
     tag_id = data_manager.get_tag_id(question_id)
     tag_list = [row["tag_id"] for row in tag_id]
     tags_to_show = []
@@ -104,14 +120,13 @@ def display_question(question_id):
             all_tags.append(i)
         else:
             all_tags.append(i)
-    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show, tag=all_tags)
+    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show,comment = comment_to_show, tag=all_tags)
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
-    comment_to_show = data_manager.get_comment(answer_id)
-    print(comment_to_show)
+    comment_to_show = data_manager.get_comment_answer(answer_id)
     return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show[0])
 
 
