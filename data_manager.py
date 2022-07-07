@@ -205,11 +205,14 @@ def edit_answer(cursor, answer_to_edit):
     return cursor.execute(query)
 
 @db_common.connection_handler
-def add_tag(cursor, new_tag):
+def add_tag(cursor, new_tag, question_id):
     cursor.execute(f"""INSERT INTO tag
         (name)
-        VALUES ('{new_tag}')"""
-    )
+        VALUES ('{new_tag}')""")
+    cursor.execute(f"""INSERT INTO question_tag
+            (question_id, tag_id)
+            VALUES ('{question_id}', (SELECT id FROM tag WHERE name='{new_tag}'))""")
+
 
 
 @db_common.connection_handler

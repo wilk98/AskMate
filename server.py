@@ -202,12 +202,13 @@ def edit_answer(answer_id):
 
 @app.route("/question/<question_id>/new-tag", methods=["POST", 'GET'])
 def add_tag(question_id):
+    print(question_id)
     if request.method == "POST":
         new_tag = request.form['tag']
-        data_manager.add_tag(new_tag)
+        data_manager.add_tag(new_tag, question_id)
         return redirect(f'/list')
     else:
-        return render_template('tag.html')
+        return render_template('tag.html', question_id=question_id)
 
 
 @app.route("/team")
