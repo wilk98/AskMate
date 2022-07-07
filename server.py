@@ -143,6 +143,11 @@ def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
     return redirect('/list')
 
+@app.route('/comments/<comment_id>/delete')
+def delete_comment(comment_id):
+    data_manager.delete_comment(comment_id)
+    return redirect('/list')
+
 
 @app.route('/question/<question_id>/vote-up')
 def que_vote_up(question_id):
@@ -200,7 +205,7 @@ def add_tag(question_id):
     if request.method == "POST":
         new_tag = request.form['tag']
         data_manager.add_tag(new_tag)
-        return redirect(f'/question/{question_id}')
+        return redirect(f'/list')
     else:
         return render_template('tag.html')
 

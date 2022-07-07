@@ -12,7 +12,7 @@ Answer site
     <h3>Comments:</h3>
     {% for item in comment %}
             <div><br>
-                <p>{{ item.message }}<br>
+                <p>{{ item.message }}<br> <a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a>
                 Added on: {{ item.submission_time }}<br>
                 </p>
             </div>
