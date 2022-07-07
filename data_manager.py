@@ -36,27 +36,36 @@ def get_answers(cursor, question_id):
 
 @db_common.connection_handler
 def get_answer(cursor, answer_id):
-    query = f"SELECT *\
-        FROM answer\
-        WHERE id = '{answer_id}'"
-    cursor.execute(query)
+    query = """SELECT *
+        FROM answer
+        WHERE id = %s"""
+    cursor.execute(query, (answer_id,))
     return cursor.fetchall()
+
+@db_common.connection_handler
+def get_comment(cursor, answer_id):
+    query = """SELECT *
+        FROM comment
+        WHERE answer_id = %s"""
+    cursor.execute(query, (answer_id,))
+    return cursor.fetchall()
+
 
 
 @db_common.connection_handler
 def get_tag_id(cursor, question_id):
-    query = f"SELECT tag_id\
-        FROM question_tag\
-        WHERE question_id = '{question_id}'"
-    cursor.execute(query)
+    query = """SELECT tag_id
+        FROM question_tag
+        WHERE question_id = %s"""
+    cursor.execute(query, (question_id,))
     return cursor.fetchall()
 
 @db_common.connection_handler
 def get_tag(cursor, tag_id):
-    query = f"SELECT name\
-        FROM tag\
-        WHERE id = '{tag_id}'"
-    cursor.execute(query)
+    query = """SELECT name
+        FROM tag
+        WHERE id = %s"""
+    cursor.execute(query, (tag_id,))
     return cursor.fetchall()
 
 @db_common.connection_handler
@@ -85,60 +94,76 @@ def post_answer(cursor, answer):
      'i_e': answer['image']
     })
 
+@db_common.connection_handler
+def post_comment(cursor, comment):
+    cursor.execute("""INSERT INTO comment\
+        (question_id,answer_id,message,submission_time, edited_count)
+        VALUES (%(q_i)s, %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
+
+                   {
+                       'q_i': comment['question_id'],
+                       'a_i': comment['answer_id'],
+                       'm_e': comment['message'],
+                       's_t': comment['submission_time'],
+                       'e_c': comment['edited_count'],
+                   })
+
+
+
 
 @db_common.connection_handler
 def delete_question(cursor, question_id):
-    query = f"DELETE FROM question\
-        WHERE id = '{question_id}'"
-    return cursor.execute(query)
+    query = """DELETE FROM question
+        WHERE id = %s"""
+    return cursor.execute(query, (question_id,))
 
 
 @db_common.connection_handler
 def delete_answers(cursor, question_id):
-    query = f"DELETE FROM answer\
-        WHERE question_id = '{question_id}'"
-    return cursor.execute(query)
+    query = """DELETE FROM answer
+        WHERE question_id = %s"""
+    return cursor.execute(query, (question_id,))
 
 
 @db_common.connection_handler
 def delete_answer(cursor, answer_id):
-    query = f"DELETE FROM answer\
-        WHERE id = '{answer_id}'"
-    return cursor.execute(query)
+    query = """DELETE FROM answer
+        WHERE id = %s"""
+    return cursor.execute(query, (answer_id,))
 
 
 @db_common.connection_handler
 def vote_question_up(cursor, question_id):
-    query = f"UPDATE question\
-        SET vote_number = vote_number + 1\
-        WHERE id = '{question_id}'"
-    return cursor.execute(query)
+    query = """UPDATE question
+        SET vote_number = vote_number + 1
+        WHERE id = %s"""
+    return cursor.execute(query, (question_id,))
 
 
 @db_common.connection_handler
 def vote_question_down(cursor, question_id):
-    query = f"UPDATE question\
-        SET vote_number = vote_number - 1\
-        WHERE id = '{question_id}'"
-    return cursor.execute(query)
+    query = """UPDATE question
+        SET vote_number = vote_number - 1
+        WHERE id = %s"""
+    return cursor.execute(query, (question_id,))
 
 
 @db_common.connection_handler
 def vote_answer_up(cursor, answer_id):
-    query = f"UPDATE answer\
-        SET vote_number = vote_number + 1\
-        WHERE id = '{answer_id}'"
-    return cursor.execute(query)
+    query = """UPDATE answer
+        SET vote_number = vote_number + 1
+        WHERE id = %s"""
+    return cursor.execute(query, (answer_id,))
 
 
 @db_common.connection_handler
 def vote_answer_down(cursor, answer_id):
-    query = f"UPDATE answer\
-        SET vote_number = vote_number - 1\
-        WHERE id = '{answer_id}'"
-    return cursor.execute(query)
+    query = """UPDATE answer
+        SET vote_number = vote_number - 1
+        WHERE id = %s"""
+    return cursor.execute(query, (answer_id,))
 
-<<<<<<< HEAD
+
 @db_common.connection_handler
 def edit_question(cursor, question_to_edit):
     query = f"UPDATE question\
@@ -159,7 +184,7 @@ def add_tag(cursor, new_tag):
         (name)
         VALUES ('{new_tag}')"""
     )
-=======
+
 
 @db_common.connection_handler
 def get_question_by_column(cursor, column_select, order):
@@ -177,4 +202,4 @@ def get_question_by_column(cursor, column_select, order):
         query += " " + order
     cursor.execute(query)
     return cursor.fetchall()
->>>>>>> 9af9a629b3441288aaedf0ea927c293bfd047fa8
+
