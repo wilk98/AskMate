@@ -8,30 +8,32 @@ Question site
 {% block body %}
 
 <div>
-    <h2>{{ question.title }}</h2>
+    <h2>{{ question.title }}</h2><h5>Vote: {{ question.vote_number }}</h5>
+
     {% for item in tag %}
         <p>{{ item }}</p>
     {% endfor %}
-
-<h3>Comments:</h3>
+    <a href="/question/{{ question.id }}/new-tag" type="button" class="btn btn-outline-primary btn-lg active btn-sm mt-2 mb-3" role="button">Add tag</a> <br>
+    <h4>{{ question.message }}</h4>
+    <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a>  <a href="/question/{{ question.id }}/edit" class="btn btn-outline-warning btn-lg active btn-sm mt-2 mb-3" >Edit question</a><br>
+    <a href="/question/{{ question.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/question/{{ question.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
+<h6>Comments:</h6>
     {% for item in comment %}
             <div><br>
                 <p>{{ item.message }}<br>
-                Added on: {{ item.submission_time }}<a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a><br>
+                Added on: {{ item.submission_time }}<a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a><br>
                 </p>
             </div>
         {% endfor %}
-    <a href="/question/{{ question.id }}/new-tag" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Add tag</a> <br>
-    <a href="/question/{{ question.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete question</a><a href="/question/{{ question.id }}/edit" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" >Edit question</a><br>
-    <a href="/question/{{ question.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/question/{{ question.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
-    <a href="/question/{{ question.id }}/new-comment" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">add comment</a>
-    <h6>{{ question.message }}</h6>
+
+    <a href="/question/{{ question.id }}/new-comment" type="button" class="btn btn-outline-primary btn-lg active btn-sm mt-2 mb-3" role="button">Add comment</a>
+
 </div>
+    <h5>Answers:</h5>
         {% for item in answers %}
-            <div><br>
-                <p>{{ item.message }}
-                    <a href ="/answer/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a> <br>
-                {{ item.submission_time }}<br>
+            <div>
+               <h6> {{ item.message }} <a href ="/answer/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a></h6>
+                <p>{{ item.submission_time }}<br>
                     Vote: {{ item.vote_number }}</p>
             </div>
         {% endfor %}
