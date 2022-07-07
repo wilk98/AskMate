@@ -19,12 +19,18 @@
         <span class="fs-4 "><strong>Team GAMM</strong></span>
       </a>
 
-      <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/index">Home</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="/list">Questions</a>
-          <small><a class="btn btn-outline-primary pt-1 pb-1 me-3" href="#" role="button">Log in</a></small>
-           <small><a class="btn btn-primary pt-1 pb-1" href="#" role="button">Sing up</a></small>
-      </nav>
+      <nav class="d-flex mt-2 mt-md-0 ms-md-auto">
+         <form class="d-flex navbar-form me-4" method="GET">
+           <div class="form-group  me-3">
+             <input type="text" class="form-control" placeholder="Search" name="scan">
+           </div>
+           <button type="submit" class="btn btn-outline-success pt-1 pb-1">Submit</button>
+         </form>
+         <a class="me-3 py-2 text-dark text-decoration-none" href="/index">Home</a>
+         <a class="me-3 py-2 text-dark text-decoration-none" href="/list">Questions</a>
+           <small><a class="btn btn-outline-primary pt-1 pb-1 me-3" href="#" role="button">Log in</a></small>
+            <small><a class="btn btn-primary pt-1 pb-1" href="#" role="button">Sing up</a></small>
+       </nav>
     </div>
     {% block body %}{% endblock %}
 
