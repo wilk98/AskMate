@@ -152,6 +152,13 @@ def delete_answer(cursor, answer_id):
 
 
 @db_common.connection_handler
+def delete_comment(cursor, comment_id):
+    query = """DELETE FROM comment
+        WHERE id = %s"""
+    return cursor.execute(query, (comment_id,))
+
+
+@db_common.connection_handler
 def vote_question_up(cursor, question_id):
     query = """UPDATE question
         SET vote_number = vote_number + 1
