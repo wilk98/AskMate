@@ -9,10 +9,12 @@ Answer site
 <div>
         <h3>{{ answer.message }}</h3>
     <p>{{ answer.submission_time }}</p>
+    <a href="/answer/{{ answer.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete answer</a>  <a href="/answer/{{ answer.id }}/edit" class="btn btn-outline-warning btn-lg active btn-sm mt-2 mb-3" >Edit answer</a><br>
+    <a href="/answer/{{ answer.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/answer/{{ answer.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
     <h3>Comments:</h3>
     {% for item in comment %}
             <div><br>
-                <p>{{ item.message }}<br> <a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a>
+                <p>{{ item.message }}<br> <a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a>
                 Added on: {{ item.submission_time }}<br>
                 </p>
             </div>
@@ -20,10 +22,6 @@ Answer site
 
 
 
-
-
-    <a href="/answer/{{ answer.id }}/delete" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">Delete answer</a><a href="/answer/{{ answer.id }}/edit" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" >Edit answer</a><br>
-    <a href="/answer/{{ answer.id }}/vote-up" type="button" class="btn btn-outline-success btn-lg active btn-sm mt-2 mb-3" role="button">Vote up</a>  <a href="/answer/{{ answer.id }}/vote-down" type="button" class="btn btn-outline-danger btn-lg active btn-sm mt-2 mb-3" role="button">Vote down</a><br>
-    <a href="/answer/{{ answer.id }}/new-comment" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">add comment</a>
+    <a href="/answer/{{ answer.id }}/new-comment" type="button" class="btn btn-outline-primary btn-lg active btn-sm mt-2 mb-3" role="button">add comment</a>
 </div>
 {% endblock %}
