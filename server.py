@@ -17,8 +17,11 @@ def hello():
 def show_questions():
     order_by_column = request.args.get('column-select')
     direction = request.args.get('order')
+    get_scan = request.args.get('scan')
     if order_by_column:
         questions = data_manager.get_question_by_column(order_by_column, direction)
+    if get_scan:
+        questions = data_manager.get_search(get_scan)
     else:
         questions = data_manager.read_questions()
     return render_template('list.html', list=questions, column_select=order_by_column, order=direction)

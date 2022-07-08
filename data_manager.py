@@ -232,3 +232,12 @@ def get_question_by_column(cursor, column_select, order):
     cursor.execute(query)
     return cursor.fetchall()
 
+@db_common.connection_handler
+def get_search(cursor, q):
+    query = f"SELECT title, message, submission_time\
+        FROM question\
+        WHERE title = '{q}'\
+        ORDER BY submission_time"
+
+    cursor.execute(query)
+    return cursor.fetchall()
