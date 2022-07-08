@@ -11,9 +11,10 @@ Questions
          <a href="/question" class="btn btn-success btn-lg mb-4 mt-3 btn-lg active">Add new question</a>
      </div>
     <div>
-        <form action="/list" action="GET">
-            <label for="column-select">Order by:</label>
-            <select id="column-select" name="column-select">
+        <form class=" form-inline" action="/list" action="GET">
+         <div class="form-group mb-2">
+            <label class="me-2" for="column-select">Order by:</label>
+            <select class="form-control-sm me-2 " id="column-select" name="column-select">
                 <option value=""></option>
                 <option value="title" {% if column_select=="title" %} SELECTED{% endif %}>Title</option>
                 <option value="submission_time" {% if column_select=="submission_time" %} SELECTED{% endif %}>Submission time</option>
@@ -22,12 +23,13 @@ Questions
                 <option value="vote_number" {% if column_select=="vote_number" %} SELECTED{% endif %}>Number of votes</option>
             </select>
 
-                <label for="order">Show in order:</label>
-            <select id="order" name="order">
+                <label class="me-2" for="order">Show in order:</label>
+            <select class="form-control-sm me-2 " id="order" name="order">
                 <option value="asc" {% if order=="asc" %}SELECTED{% endif %}>Ascending</option>
                 <option value="desc" {% if order=="desc" %}SELECTED{% endif %}>Descending</option>
             </select>
-            <button type="submit">Submit</button>
+         
+            <button class="btn btn-outline-success " type="submit">Submit</button>
         </form>
     </div>
                  {% for item in list %}

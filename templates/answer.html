@@ -6,14 +6,14 @@
 {% endblock %}
 
 {% block body %}
-        <h2>Answer question:</h2>
+        <h2>Answer question: </h2>
         <form class="form-group col-lg-5"  action="/question/{{ question_id }}/new_answer" method="post">
-            <label  >Answer: </label><br>
+            <label>Answer: </label><br>
             <label for="message">{% block message %}{% endblock %}</label><br>
             <textarea  class="form-control col-lg-6" id="message" name="message" rows="4" cols="60">{{ message if message }}</textarea>
-            <label  >Image: </label><br>
-            <label  for="image">{% block image %}{% endblock %}</label><br>
-            <textarea class="form-control col-lg-6" id="image" name="image" rows="1" cols="40">{{ image if image }}</textarea>
+            
+            <label class="mt-3 mb-1" for="exampleFormControlFile1">Example file input{% block image %}{% endblock %}</label><br>
+            <input type="file" class="form-control col-lg-6" id="image" name="image" rows="1" cols="40">{{ image if image }}</input>
             <button class="btn btn-success mt-4 btn-lg" type="submit">Submit</button>
         </form>
 {% endblock %}
