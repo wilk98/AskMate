@@ -234,10 +234,8 @@ def get_question_by_column(cursor, column_select, order):
 
 @db_common.connection_handler
 def get_search(cursor, q):
-    query = f"SELECT title, message, submission_time\
-        FROM question\
-        WHERE title = '{q}'\
-        ORDER BY submission_time"
-
-    cursor.execute(query)
+    cursor.execute("""SELECT *
+                      FROM
+                      question
+                      WHERE title ILIKE %(q1)s""", {'q1': f"%{q}%"})
     return cursor.fetchall()
