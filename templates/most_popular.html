@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Top questions
+{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+     <div class="d-flex justify-content-between align-items-center mb-5">
+         <h2>Top questions:</h2>
+     </div>
+                 {% for item in most_popular %}
+                     <div class="alert alert-secondary">
+                         <p>{{ item.id }}. <a class="text-uppercase" href ="/question/{{ item.id }}" class="">{{ item.title }}</a></p>
+                         <div class="d-flex justify-content-between">
+                             <p><strong>Time of the submission: {{ item.submission_time }}</strong></p>
+                             <p><strong>View number: {{ item.view_number }}</strong></p>
+                             <p><strong>Votes: {{ item.vote_number }}</strong></p>
+                         </div>
+                             <p>{{ item.message }}</p>
+                             <p>{{ item.image }}</p>
+
+                         <a href="/question/{{ item.id }}/new_answer" class="btn btn-warning mb-4 mt-3">Add new answer</a>
+                     </div>
+                 {% endfor %}
+</div>
+{% endblock %}
