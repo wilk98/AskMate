@@ -30,24 +30,25 @@ Questions
             </select>
          
             <button class="btn btn-outline-success " type="submit">Submit</button>
+         </div>
         </form>
     </div>
-                 {% for item in list %}
-                     <div class="alert alert-secondary">
-                     <div class="d-flex justify-content-start align-items-center">
-                         <h2 class="me-4">{{ item.title }} </h2>
-                         <a href ="/question/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a>
-                     </div>
-                         <div class="d-flex justify-content-between">
-                             <p><strong>Time of the submission: {{ item.submission_time }}</strong></p>
-                             <p><strong>View number: {{ item.view_number }}</strong></p>
-                             <p><strong>Votes: {{ item.vote_number }}</strong></p>
-                         </div>
-                             <p>{{ item.message }}</p>
-                             <p>{{ item.image }}</p>
+         {% for item in list %}
+             <div class="alert alert-secondary">
+             <div class="d-flex justify-content-start align-items-center">
+                 <h2 class="me-4">{{ item.title }} </h2>
+                 <a href ="/question/{{ item.id }}" type="button" class="btn btn-outline-secondary btn-lg active btn-sm mt-2 mb-3" role="button">See more...</a>
+             </div>
+                 <div class="d-flex justify-content-between">
+                     <p><strong>Time of the submission: {{ item.submission_time }}</strong></p>
+                     <p><strong>View number: {{ item.view_number }}</strong></p>
+                     <p><strong>Votes: {{ item.vote_number }}</strong></p>
+                 </div>
+                     <p>{{ item.message }}</p>
+                     <p>{{ item.image }}</p>
 
-                         <a href="/question/{{ item.id }}/new_answer" class="btn btn-outline-info mb-4 mt-3">Add new answer</a>
-                     </div>
-                 {% endfor %}
-</div>
+                 <a href="/question/{{ item.id }}/new_answer" class="btn btn-outline-info mb-4 mt-3">Add new answer</a>
+             </div>
+         {% endfor %}
+    </div>
 {% endblock %}
