@@ -38,6 +38,7 @@ def get_answer(cursor, answer_id):
     cursor.execute(query, (answer_id,))
     return cursor.fetchall()
 
+
 @db_common.connection_handler
 def get_comment_answer(cursor, answer_id):
     query = """SELECT *
@@ -45,6 +46,7 @@ def get_comment_answer(cursor, answer_id):
         WHERE answer_id = %s"""
     cursor.execute(query, (answer_id,))
     return cursor.fetchall()
+
 
 @db_common.connection_handler
 def get_comment_question(cursor, question_id):
@@ -55,7 +57,6 @@ def get_comment_question(cursor, question_id):
     return cursor.fetchall()
 
 
-
 @db_common.connection_handler
 def get_tag_id(cursor, question_id):
     query = """SELECT tag_id
@@ -63,6 +64,7 @@ def get_tag_id(cursor, question_id):
         WHERE question_id = %s"""
     cursor.execute(query, (question_id,))
     return cursor.fetchall()
+
 
 @db_common.connection_handler
 def get_tag(cursor, tag_id):
@@ -78,13 +80,13 @@ def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
         (submission_time, view_number, vote_number, title, message, image)
         VALUES (%(s_t)s, %(v_w)s, %(v_e)s, %(t_e)s, %(m_e)s, %(i_e)s)""",
-        {'s_t': question_detail['submission_time'],
-         'v_w': question_detail['view_number'],
-         'v_e': question_detail['vote_number'],
-         't_e': question_detail['title'],
-         'm_e': question_detail['message'],
-         'i_e': question_detail['image']
-         })
+                   {'s_t': question_detail['submission_time'],
+                    'v_w': question_detail['view_number'],
+                    'v_e': question_detail['vote_number'],
+                    't_e': question_detail['title'],
+                    'm_e': question_detail['message'],
+                    'i_e': question_detail['image']
+                    })
 
 
 @db_common.connection_handler
@@ -92,12 +94,13 @@ def post_answer(cursor, answer):
     cursor.execute("""INSERT INTO answer\
     (submission_time, vote_number, question_id, message, image)
     VALUES (%(s_t)s, %(v_n)s, %(q_i)s, %(m_e)s, %(i_e)s)""",
-    {'s_t': answer['submission_time'],
-     'v_n': answer['vote_number'],
-     'q_i': answer['question_id'],
-     'm_e': answer['message'],
-     'i_e': answer['image']
-    })
+                   {
+                       's_t': answer['submission_time'],
+                       'v_n': answer['vote_number'],
+                       'q_i': answer['question_id'],
+                       'm_e': answer['message'],
+                       'i_e': answer['image']
+                   })
 
 
 @db_common.connection_handler
@@ -189,9 +192,11 @@ def vote_answer_down(cursor, answer_id):
 @db_common.connection_handler
 def edit_question(cursor, question_to_edit):
     query = f"UPDATE question\
-        SET title = '{question_to_edit['title']}', message = '{question_to_edit['message']}', image = '{question_to_edit['image']}'\
+        SET title = '{question_to_edit['title']}', " \
+            f"message = '{question_to_edit['message']}', image = '{question_to_edit['image']}'\
         WHERE id = '{question_to_edit['id']}';"
     return cursor.execute(query)
+
 
 @db_common.connection_handler
 def edit_answer(cursor, answer_to_edit):
@@ -199,6 +204,7 @@ def edit_answer(cursor, answer_to_edit):
         SET message = '{answer_to_edit['message']}', image = '{answer_to_edit['image']}'\
         WHERE id = '{answer_to_edit['id']}';"
     return cursor.execute(query)
+
 
 @db_common.connection_handler
 def add_tag(cursor, new_tag, question_id):
@@ -210,10 +216,9 @@ def add_tag(cursor, new_tag, question_id):
             VALUES ('{question_id}', (SELECT id FROM tag WHERE name='{new_tag}'))""")
 
 
-
 @db_common.connection_handler
 def get_question_by_column(cursor, column_select, order):
-    #TODO: check column_select value to avoid SQL Injection!
+    # TODO: check column_select value to avoid SQL Injection!
     allowed_columns = ['title', 'submission_time', 'view_number', 'vote_number', 'message']
     if column_select not in allowed_columns:
         column_select = 'title'
@@ -227,6 +232,7 @@ def get_question_by_column(cursor, column_select, order):
         query += " " + order
     cursor.execute(query)
     return cursor.fetchall()
+
 
 @db_common.connection_handler
 def get_search(cursor, q):
