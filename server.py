@@ -195,7 +195,11 @@ def edit_question(question_id):
         data_manager.edit_question(question_to_edit)
         return redirect(f'/question/{question_id}')
     else:
-        return render_template('edit_question.html', question_id=question_id)
+        question_to_edit = data_manager.get_question(question_id)
+        title = question_to_edit['title']
+        question = question_to_edit['message']
+        return render_template('edit_question.html', question_id=question_id,
+                               title=title, message=question)
 
 
 @app.route('/answer/<answer_id>/edit', methods=["POST", 'GET'])
