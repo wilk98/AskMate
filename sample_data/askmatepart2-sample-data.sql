@@ -67,7 +67,7 @@ CREATE TABLE public.answer (
 );
 
 
-ALTER TABLE public.answer OWNER TO ania;
+ALTER TABLE public.answer OWNER TO macie;
 
 --
 -- Name: answer_id_seq; Type: SEQUENCE; Schema: public; Owner: ania
@@ -82,7 +82,7 @@ CREATE SEQUENCE public.answer_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.answer_id_seq OWNER TO ania;
+ALTER TABLE public.answer_id_seq OWNER TO macie;
 
 --
 -- Name: answer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ania
@@ -106,7 +106,7 @@ CREATE TABLE public.comment (
 );
 
 
-ALTER TABLE public.comment OWNER TO ania;
+ALTER TABLE public.comment OWNER TO macie;
 
 --
 -- Name: comment_id_seq; Type: SEQUENCE; Schema: public; Owner: ania
@@ -121,7 +121,7 @@ CREATE SEQUENCE public.comment_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.comment_id_seq OWNER TO ania;
+ALTER TABLE public.comment_id_seq OWNER TO macie;
 
 --
 -- Name: comment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ania
@@ -142,7 +142,7 @@ CREATE TABLE public.member (
 );
 
 
-ALTER TABLE public.member OWNER TO ania;
+ALTER TABLE public.member OWNER TO macie;
 
 --
 -- Name: member_member_id_seq; Type: SEQUENCE; Schema: public; Owner: ania
@@ -157,7 +157,7 @@ CREATE SEQUENCE public.member_member_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.member_member_id_seq OWNER TO ania;
+ALTER TABLE public.member_member_id_seq OWNER TO macie;
 
 --
 -- Name: member_member_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ania
@@ -182,7 +182,7 @@ CREATE TABLE public.question (
 );
 
 
-ALTER TABLE public.question OWNER TO ania;
+ALTER TABLE public.question OWNER TO macie;
 
 --
 -- Name: question_id_seq; Type: SEQUENCE; Schema: public; Owner: ania
@@ -197,7 +197,7 @@ CREATE SEQUENCE public.question_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.question_id_seq OWNER TO ania;
+ALTER TABLE public.question_id_seq OWNER TO macie;
 
 --
 -- Name: question_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ania
@@ -216,7 +216,7 @@ CREATE TABLE public.question_tag (
 );
 
 
-ALTER TABLE public.question_tag OWNER TO ania;
+ALTER TABLE public.question_tag OWNER TO macie;
 
 --
 -- Name: tag; Type: TABLE; Schema: public; Owner: ania
@@ -228,7 +228,7 @@ CREATE TABLE public.tag (
 );
 
 
-ALTER TABLE public.tag OWNER TO ania;
+ALTER TABLE public.tag OWNER TO macie;
 
 --
 -- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: ania
@@ -243,7 +243,7 @@ CREATE SEQUENCE public.tag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.tag_id_seq OWNER TO ania;
+ALTER TABLE public.tag_id_seq OWNER TO macie;
 
 --
 -- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: ania

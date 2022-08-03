@@ -130,7 +130,7 @@ def display_question(question_id):
             all_tags.append(i)
         else:
             all_tags.append(i)
-    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show, comment=comment_to_show, tag=all_tags)
+    return render_template('question_to_show.html', question=question_to_show, answers=answers_to_show, comment=comment_to_show, tag=all_tags)
 
 
 @app.route("/answer/<answer_id>")
@@ -138,6 +138,13 @@ def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     comment_to_show = data_manager.get_comment_answer(answer_id)
     return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show[0])
+
+
+@app.route("/user/<user_id>")
+def display_user(member_id):
+    member_to_show = data_manager.get_member(member_id)
+    print(member_to_show)
+    return render_template('user_page.html', member=member_to_show)
 
 
 @app.route('/question/<question_id>/delete')

@@ -40,6 +40,15 @@ def get_answer(cursor, answer_id):
 
 
 @db_common.connection_handler
+def get_member(cursor, member_id):
+    query = """SELECT *
+        FROM member
+        WHERE member_id = %s"""
+    cursor.execute(query, (member_id,))
+    return cursor.fetchall()
+
+
+@db_common.connection_handler
 def get_comment_answer(cursor, answer_id):
     query = """SELECT *
         FROM comment
