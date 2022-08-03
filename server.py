@@ -243,13 +243,15 @@ def login():
 
 @app.route("/register", methods=["POST", 'GET'])
 def register():
+    ts_epoch = (int(time.time()))
     new_user = {}
     if request.method == "POST":
         if len(request.form['email']) > 4 \
            and len(request.form['psw']) > 3:
             hash = generate_password_hash(request.form['psw'])
-            new_user['email'] = request.form['email']
-            new_user['psw'] = request.form['psw']
+            new_user['user_name'] = request.form['email']
+            new_user['password'] = request.form['psw']
+            new_user['registration_date'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
             data_manager.addUser(new_user)
             if new_user:
                 flash("You have successfully registered!", "sussess")

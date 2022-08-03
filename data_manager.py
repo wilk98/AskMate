@@ -246,11 +246,11 @@ def get_search(cursor, q):
 
 @db_common.connection_handler
 def addUser(cursor, new_user):
-    cursor.execute("""INSERT INTO users(id, email, psw, time)
-                   VALUES (%(i_d)s, %(e_m)s, %(p_s)s, %(t_m)s )""",
+    print(new_user)
+    cursor.execute("""INSERT INTO member(user_name, password, registration_date)
+                   VALUES (%(e_m)s, %(p_s)s, %(t_m)s )""",
                    {
-                       'i_d': new_user['id'],
-                       'e_m': new_user['email'],
-                       'p_s': new_user['psw'],
-                       't_m': new_user['time']
+                       'e_m': new_user['user_name'],
+                       'p_s': new_user['password'],
+                       't_m': new_user['registration_date']
                    })
