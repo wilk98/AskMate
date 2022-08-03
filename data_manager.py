@@ -14,7 +14,7 @@ def read_questions(cursor):
 
 @db_common.connection_handler
 def get_question(cursor, question_id):
-    query = """SELECT *  
+    query = """SELECT *
             FROM question
             WHERE id = %s"""
     cursor.execute(query, (question_id,))
@@ -23,7 +23,7 @@ def get_question(cursor, question_id):
 
 @db_common.connection_handler
 def get_answers(cursor, question_id):
-    query = """SELECT *  
+    query = """SELECT *
             FROM answer
             WHERE question_id = %s"""
     cursor.execute(query, (question_id,))
@@ -245,11 +245,12 @@ def get_search(cursor, q):
 
 
 @db_common.connection_handler
-def addUser(name, email, hpsw):
-    query = (
-        f"SELECT COUNT() as `count` FROM users WHERE email LIKE '{email}'")
-    if ['count'] > 0:
-        print("User with given email already exists")
-        return False
-    cursor.execute(query)
-    return cursor.fetchone()
+def addUser(cursor, new_user):
+    cursor.execute("""INSERT INTO users(id, email, psw, time)
+                   VALUES (%(i_d)s, %(e_m)s, %(p_s)s, %(t_m)s )""",
+                   {
+                       'i_d': new_user['id'],
+                       'e_m': new_user['email'],
+                       'p_s': new_user['psw'],
+                       't_m': new_user['time']
+                   })
