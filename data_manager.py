@@ -14,7 +14,7 @@ def read_questions(cursor):
 
 @db_common.connection_handler
 def get_question(cursor, question_id):
-    query = """SELECT *  
+    query = """SELECT *
             FROM question
             WHERE id = %s"""
     cursor.execute(query, (question_id,))
@@ -23,7 +23,7 @@ def get_question(cursor, question_id):
 
 @db_common.connection_handler
 def get_answers(cursor, question_id):
-    query = """SELECT *  
+    query = """SELECT *
             FROM answer
             WHERE question_id = %s"""
     cursor.execute(query, (question_id,))
@@ -241,3 +241,15 @@ def get_search(cursor, q):
                       question
                       WHERE title ILIKE %(q1)s""", {'q1': f"%{q}%"})
     return cursor.fetchall()
+
+
+@db_common.connection_handler
+def addUser(cursor, new_user):
+    print(new_user)
+    cursor.execute("""INSERT INTO member(user_name, password, registration_date)
+                   VALUES (%(e_m)s, %(p_s)s, %(t_m)s )""",
+                   {
+                       'e_m': new_user['user_name'],
+                       'p_s': new_user['password'],
+                       't_m': new_user['registration_date']
+                   })
