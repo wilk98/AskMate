@@ -8,6 +8,7 @@ from datetime import datetime
 import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ghbdtnvtyzpjdenufkrf'
 
@@ -27,7 +28,7 @@ def hello():
 def show_questions():
     order_by_column = request.args.get('column-select')
     direction = request.args.get('order')
-    #get_scan = request.args.get('scan')
+    # get_scan = request.args.get('scan')
     if order_by_column:
         questions = data_manager.get_question_by_column(
             order_by_column, direction)
@@ -242,12 +243,15 @@ def login():
 
 @app.route("/register", methods=["POST", 'GET'])
 def register():
+    new_user = {}
     if request.method == "POST":
-        if len(request.form['name']) > 4 and len(request.form['email']) > 4 \
-           and len(request.form['pws']) > 4 and request.form(['pws']) == request.form(['pws2']):
-            hash = generate_password_hash(request.form['pws'])
-            """res = dbase.addUser(request.form['name'], request.form['email'], hash)"""
-            if res:
+        if len(request.form['email']) > 4 \
+           and len(request.form['psw']) > 3:
+            hash = generate_password_hash(request.form['psw'])
+            new_user['email'] = request.form['email']
+            new_user['psw'] = request.form['psw']
+            data_manager.addUser(new_user)
+            if new_user:
                 flash("You have successfully registered!", "sussess")
                 return redirect(url_for('login'))
             else:
