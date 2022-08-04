@@ -11,9 +11,8 @@ import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ghbdtn93vbh65bdctv407yfv'
+app.secret_key = 'ghbdtn93vbh65bdctv407yfv'
 
 
 @app.route("/bonus-questions")
@@ -35,12 +34,11 @@ def index():
 def login():
     user = {}
     if request.method == "POST":
-       # hash = check_password_hash()
-        user['user_name'] = request.form['email']
-        user['password'] = request.form['psw']
-        data_check = data_manager.check_user(user)
-        if data_check != []:
-            session['member_id'] = data_check['member_id']
+        user_name = request.form['email']
+        password = request.form['psw']
+        user_data = data_manager.get_user_password(user_name)
+        if user_data and check_password_hash(user_data['password'], password):
+            session['member_id'] = user_data['member_id']
             return redirect(url_for('index'))
         else:
             print("bad login")
