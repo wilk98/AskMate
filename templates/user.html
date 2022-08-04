@@ -19,9 +19,23 @@
             </ul>
 
     <h2>Questions asked by User:</h2>
-
+        <ul class="list-group">
+        {% for question in questions %}
+            <li class="list-group-item"><a href="/question/{{ question.id }}">{{ question.title }}</a></li>
+        {% endfor %}
+        </ul>
     <h2>Answers given by User:</h2>
+        <ul class="list-group">
+        {% for answer in answers %}
+            <li class="list-group-item"><a href="/answer/{{ answer.id }}">{{ answer.message }}</a></li>
+        {% endfor %}
+        </ul>
     <h2>Comments written by User:</h2>
+        <ul class="list-group">
+        {% for comment in comments %}
+            <li class="list-group-item"><a href="/comment/{{ comment.id }}">{{ comment.message }}</a></li>
+        {% endfor %}
+        </ul>
 
 
 {% endblock %}

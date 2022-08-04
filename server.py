@@ -43,7 +43,7 @@ def index():
     if 'member_id' in session:
         print(session)
         print(session['member_id'])
-        return render_template('index.html', logged_user=session['user_name'])
+        return render_template('index.html', logged_user=get_logged_user())
     return render_template('index.html')
 
 
@@ -70,8 +70,12 @@ def login():
 @login_required
 def get_user_data(user_id):
     user = data_manager.get_user_data(user_id)
+    questions = data_manager.get_user_questions(user_id)
+    answers = data_manager.get_user_answers(user_id)
+    comments = data_manager.get_user_comments(user_id)
     return render_template('user.html', user=user,
-                           logged_user=get_logged_user())
+                           logged_user=get_logged_user(),
+                           questions=questions, answers=answers, comments=comments)
 
 
 @app.route("/logout")
