@@ -11,10 +11,6 @@ import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class User:
-    def __init__(self, id, username, password):
-        pass
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ghbdtn93vbh65bdctv407yfv'
@@ -128,6 +124,7 @@ def add_new_answer(question_id):
         answer_to_post['question_id'] = question_id
         answer_to_post['message'] = request.form['message']
         answer_to_post['image'] = request.form['image']
+        answer_to_post['member_id'] = session['member_id']
         data_manager.post_answer(answer_to_post)
         return redirect('/list')
     return render_template('answer.html',
@@ -145,6 +142,7 @@ def add_comment_question(question_id):
         comment_to_post['message'] = request.form['comment']
         comment_to_post['edited_count'] = 0
         comment_to_post['question_id'] = question_id
+        comment_to_post['member_id'] = session['member_id']
         data_manager.post_comment_question(comment_to_post)
 
         return redirect('/list')
@@ -161,6 +159,7 @@ def add_comment_answer(answer_id):
         comment_to_post['message'] = request.form['comment']
         comment_to_post['edited_count'] = 0
         comment_to_post['answer_id'] = answer_id
+        comment_to_post['member_id'] = session['member_id']
         data_manager.post_comment_answer(comment_to_post)
 
         return redirect('/list')

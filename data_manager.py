@@ -103,40 +103,43 @@ def post_question(cursor, question_detail):
 @db_common.connection_handler
 def post_answer(cursor, answer):
     cursor.execute("""INSERT INTO answer\
-    (submission_time, vote_number, question_id, message, image)
-    VALUES (%(s_t)s, %(v_n)s, %(q_i)s, %(m_e)s, %(i_e)s)""",
+    (submission_time, vote_number, question_id, message, image, member_id)
+    VALUES (%(s_t)s, %(v_n)s, %(q_i)s, %(m_e)s, %(i_e)s, %(m_i)s)""",
                    {
                        's_t': answer['submission_time'],
                        'v_n': answer['vote_number'],
                        'q_i': answer['question_id'],
                        'm_e': answer['message'],
-                       'i_e': answer['image']
+                       'i_e': answer['image'],
+                       'm_i': answer['member_id']
                    })
 
 
 @db_common.connection_handler
 def post_comment_answer(cursor, comment):
     cursor.execute("""INSERT INTO comment
-        (answer_id, message, submission_time, edited_count)
-        VALUES ( %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
+        (answer_id, message, submission_time, edited_count, member_id)
+        VALUES ( %(a_i)s, %(m_e)s, %(s_t)s, %(e_c)s, %(m_i)s)""",
                    {
                        'a_i': comment['answer_id'],
                        'm_e': comment['message'],
                        's_t': comment['submission_time'],
                        'e_c': comment['edited_count'],
+                       'm_i': comment['member_id']
                    })
 
 
 @db_common.connection_handler
 def post_comment_question(cursor, comment):
     cursor.execute("""INSERT INTO comment
-        (question_id, message, submission_time, edited_count)
-        VALUES ( %(q_i)s, %(m_e)s, %(s_t)s, %(e_c)s)""",
+        (question_id, message, submission_time, edited_count, member_id)
+        VALUES ( %(q_i)s, %(m_e)s, %(s_t)s, %(e_c)s, %(m_i)s)""",
                    {
                        'q_i': comment['question_id'],
                        'm_e': comment['message'],
                        's_t': comment['submission_time'],
                        'e_c': comment['edited_count'],
+                       'm_i': comment['member_id']
                    })
 
 
