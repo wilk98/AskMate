@@ -17,7 +17,7 @@ app.secret_key = 'ghbdtn93vbh65bdctv407yfv'
 
 def get_logged_user():
     if 'user_name' in session:
-        return session['user_name']
+        return {'user_name': session['user_name'], 'member_id': session['member_id']}
     else:
         return None
 
@@ -70,7 +70,8 @@ def login():
 @login_required
 def get_user_data(user_id):
     user = data_manager.get_user_data(user_id)
-    return render_template('user.html', user=user)
+    return render_template('user.html', user=user,
+                           logged_user=get_logged_user())
 
 
 @app.route("/logout")
