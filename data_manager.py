@@ -308,4 +308,28 @@ def get_user_data(cursor, user_id):
     return cursor.fetchone()
 
 
+@db_common.connection_handler
+def get_user_questions(cursor, user_id):
+    cursor.execute("""SELECT id, title FROM question
+    WHERE member_id = %(user_id)s""",
+                   {'user_id': user_id,
+                    })
+    return cursor.fetchall()
 
+
+@db_common.connection_handler
+def get_user_answers(cursor, user_id):
+    cursor.execute("""SELECT id, message FROM answer
+    WHERE member_id = %(user_id)s""",
+                   {'user_id': user_id,
+                    })
+    return cursor.fetchall()
+
+
+@db_common.connection_handler
+def get_user_comments(cursor, user_id):
+    cursor.execute("""SELECT id, message FROM comment
+    WHERE member_id = %(user_id)s""",
+                   {'user_id': user_id,
+                    })
+    return cursor.fetchall()

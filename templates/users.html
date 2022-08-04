@@ -6,8 +6,8 @@ Users
 
 {% block body %}
 <div class="container mt-5">
-     <div class="d-flex justify-content-between align-items-center mb-5">
         <h1>Users</h1>
+     <div class="d-flex justify-content-between align-items-center mb-5">
             <table>
                 <tr>
                     <th>User name</th>
@@ -20,7 +20,7 @@ Users
                 {% for item in member %}
                 <tr>
                     <td><a href="/user/{{ item.member_id }}">{{ item.user_name }}</a></td>
-                    <td>{{ item.registration_date }}</td>
+                    <td>{{ item.registration_date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ item.number_of_questions }}</td>
                     <td>{{ item.number_of_answers }}</td>
                     <td>{{ item.number_of_comments }}</td>
