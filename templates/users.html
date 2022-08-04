@@ -20,11 +20,11 @@ Users
                 {% for item in member %}
                 <tr>
                     <td>{{ item.user_name }}</td>
-                    <td>{{ item.registration_date}}</td>
-                    <td>nonr</td>
-                    <td>nonr</td>
-                    <td>nonr</td>
-                    <td>nonr</td>
+                    <td>{{ item.registration_date }}</td>
+                    <td>{{ item.number_of_questions }}</td>
+                    <td>{{ item.number_of_answers }}</td>
+                    <td>{{ item.number_of_comments }}</td>
+                    <td>{{ item.reputation }}</td>
                 </tr>
                 {% endfor %}
             </table>
