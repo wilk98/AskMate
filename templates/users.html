@@ -19,7 +19,7 @@ Users
                 </tr>
                 {% for item in member %}
                 <tr>
-                    <td><a href="/user/{{ user_id }}">{{ item.user_name }}</a></td>
+                    <td><a href="/user/{{ item.member_id }}">{{ item.user_name }}</a></td>
                     <td>{{ item.registration_date }}</td>
                     <td>{{ item.number_of_questions }}</td>
                     <td>{{ item.number_of_answers }}</td>

@@ -32,7 +32,9 @@
                 <small><a class="btn btn-outline-primary pt-1 pb-1 me-1" href="/login" role="button">Log in</a></small>
                 <small><a class="btn btn-primary pt-1 pb-1 me-1" href="/register" role="button">Sing up</a></small>
             {% else %}
-                <small><a class="btn btn-secondary pt-1 pb-1" href="/logout" role="button">Logout {{ logged_user }}</a></small>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="/users">Users</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="/user/{{ logged_user.member_id }}">{{ logged_user.user_name }}</a>
+                <small><a class="btn btn-secondary pt-1 pb-1" href="/logout" role="button">Logout</a></small>
             {% endif %}
        </nav>
     </div>
