@@ -37,7 +37,7 @@ def get_answer(cursor, answer_id):
         FROM answer
         WHERE id = %s"""
     cursor.execute(query, (answer_id,))
-    return cursor.fetchall()
+    return cursor.fetchone()
 
 
 @db_common.connection_handler
@@ -56,6 +56,15 @@ def get_comment_question(cursor, question_id):
         WHERE question_id = %s"""
     cursor.execute(query, (question_id,))
     return cursor.fetchall()
+
+
+@db_common.connection_handler
+def get_comment(cursor, comment_id):
+    query = """SELECT *
+        FROM comment
+        WHERE id = %s"""
+    cursor.execute(query, (comment_id,))
+    return cursor.fetchone()
 
 
 @db_common.connection_handler
@@ -79,7 +88,7 @@ def get_tag(cursor, tag_id):
 @db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
-        (submission_time, view_number, vote_number, title, message, image)
+        (submission_time, view_number, vote_number, title, message, image) # user_id
         VALUES (%(s_t)s, %(v_w)s, %(v_e)s, %(t_e)s, %(m_e)s, %(i_e)s)""",
                    {'s_t': question_detail['submission_time'],
                     'v_w': question_detail['view_number'],
@@ -204,6 +213,14 @@ def edit_answer(cursor, answer_to_edit):
     query = f"UPDATE answer\
         SET message = '{answer_to_edit['message']}', image = '{answer_to_edit['image']}'\
         WHERE id = '{answer_to_edit['id']}';"
+    return cursor.execute(query)
+
+
+@db_common.connection_handler
+def edit_comment(cursor, comment_to_edit):
+    query = f"UPDATE comment\
+        SET message = '{comment_to_edit['message']}'\
+        WHERE id = '{comment_to_edit['id']}';"
     return cursor.execute(query)
 
 

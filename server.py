@@ -3,7 +3,7 @@ from nturl2path import url2pathname
 from turtle import title
 from flask import Flask, flash, render_template, url_for, session, escape
 from bonus_questions import SAMPLE_QUESTIONS
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, session
 import connection
 import time
 from datetime import datetime
@@ -96,6 +96,7 @@ def add_question():
         question_to_add['title'] = request.form['title']
         question_to_add['message'] = request.form['message']
         question_to_add['image'] = request.form['image']
+        # user_id = session['userid']
         data_manager.post_question(question_to_add)
         return redirect('/list')
     else:
@@ -179,14 +180,14 @@ def display_question(question_id):
             all_tags.append(i)
         else:
             all_tags.append(i)
-    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show, comment=comment_to_show, tag=all_tags)
+    return render_template('question_to_show.html', question=question_to_show, answers=answers_to_show, comment=comment_to_show, tag=all_tags)
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     comment_to_show = data_manager.get_comment_answer(answer_id)
-    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show[0])
+    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show)
 
 
 @app.route('/question/<question_id>/delete')
@@ -264,6 +265,22 @@ def edit_answer(answer_id):
         return render_template('edit_answer.html', answer_id=answer_id)
 
 
+@app.route('/comments/<comment_id>/edit', methods=["POST", 'GET'])
+def edit_comment(comment_id):
+    comment_to_edit = {}
+    if request.method == "POST":
+        comment_to_edit['id'] = comment_id
+        comment_to_edit['message'] = request.form['message']
+        data_manager.edit_comment(comment_to_edit)
+        # TODO: where to go - answer/question, or just edit comment???
+        return redirect('/list')
+    else:
+        comment_to_edit = data_manager.get_comment(comment_id)
+        comment = comment_to_edit['message']
+        return render_template('comment.html', comment_id=comment_id,
+                               message=comment)
+
+
 @app.route("/question/<question_id>/new-tag", methods=["POST", 'GET'])
 def add_tag(question_id):
     if request.method == "POST":
@@ -283,6 +300,35 @@ def team_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
+
+
+@app.route("/login", methods=["POST", 'GET'])
+def login():
+    return render_template('login.html',  title="authorization")
+
+
+@app.route("/register", methods=["POST", 'GET'])
+def register():
+    ts_epoch = (int(time.time()))
+    new_user = {}
+    if request.method == "POST":
+        if len(request.form['email']) > 4 \
+           and len(request.form['psw']) > 3:
+            hash = generate_password_hash(request.form['psw'])
+            new_user['user_name'] = request.form['email']
+            new_user['password'] = request.form['psw']
+            new_user['registration_date'] = str(
+                datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+            data_manager.addUser(new_user)
+            if new_user:
+                flash("You have successfully registered!", "sussess")
+                return redirect(url_for('login'))
+            else:
+                flash("Error adding to database", "error")
+        else:
+            flash("The form contains errors", "error")
+
+    return render_template('register.html',  title="register")
 
 
 if __name__ == "__main__":

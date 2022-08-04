@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Edit comment
+{% endblock %}
+
+
+{% block body %}
+     <h2>Edit comment</h2>
+         <form class="form-group col-lg-5" action="/comments/{{ comment_id }}/edit" method="post">
+            <label >Comment: </label><br>
+             <input  class="form-control col-lg-6" type="text" name="message" value="{{ message }}"/><br>
+            <button type="submit" class="btn btn-success mt-4 btn-lg"><strong>Send</strong></button>
+
+        </form>
+
+{% endblock %}
