@@ -28,9 +28,12 @@
          </form>
          <a class="me-3 py-2 text-dark text-decoration-none" href="/index">Home</a>
          <a class="me-3 py-2 text-dark text-decoration-none" href="/list">Questions</a>
-            <small><a class="btn btn-outline-primary pt-1 pb-1 me-1" href="/login" role="button">Log in</a></small>
-            <small><a class="btn btn-primary pt-1 pb-1 me-1" href="/register" role="button">Sing up</a></small>
-            <small><a class="btn btn-secondary pt-1 pb-1" href="/logout" role="button">Logout</a></small>
+            {% if not logged_user %}
+                <small><a class="btn btn-outline-primary pt-1 pb-1 me-1" href="/login" role="button">Log in</a></small>
+                <small><a class="btn btn-primary pt-1 pb-1 me-1" href="/register" role="button">Sing up</a></small>
+            {% else %}
+                <small><a class="btn btn-secondary pt-1 pb-1" href="/logout" role="button">Logout {{ logged_user }}</a></small>
+            {% endif %}
        </nav>
     </div>
     {% block body %}{% endblock %}
