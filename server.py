@@ -66,6 +66,13 @@ def login():
     return render_template('login.html',  title="authorization", invalid_credentials=invalid_credentials)
 
 
+@app.route('/user/<user_id>')
+@login_required
+def get_user_data(user_id):
+    user = data_manager.get_user_data(user_id)
+    return render_template('user.html', user=user)
+
+
 @app.route("/logout")
 def logout():
     session.pop('member_id', None)

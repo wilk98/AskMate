@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    User details
+{% endblock %}
+
+
+{% block body %}
+     <h2>User Details</h2>
+
+            <ul class="list-group">
+              <li class="list-group-item">User Id: {{ user.member_id }}</li>
+              <li class="list-group-item">Username: {{ user.user_name }}</li>
+              <li class="list-group-item">Registration date: {{ user.registration_date }}</li>
+              <li class="list-group-item">Number of asked questions: {{ user.number_of_questions }}</li>
+              <li class="list-group-item">Number of answers: {{ user.number_of_answers }} </li>
+              <li class="list-group-item">Number of comments: {{ user.number_of_comments }} </li>
+              <li class="list-group-item">Reputation: {{ user.reputation }} </li>
+            </ul>
+
+
+{% endblock %}

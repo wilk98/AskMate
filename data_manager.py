@@ -294,3 +294,18 @@ def get_user_password(cursor, user_name):
                             'username': user_name,
                         })
     return cursor.fetchone()
+
+
+@db_common.connection_handler
+def get_user_data(cursor, user_id):
+    cursor.execute("""SELECT member_id, user_name, registration_date, number_of_questions, 
+                        number_of_answers, number_of_comments, reputation 
+                        FROM member
+                        WHERE member_id = %(user_id)s""",
+                        {
+                            'user_id': user_id,
+                        })
+    return cursor.fetchone()
+
+
+
