@@ -77,6 +77,12 @@ def register():
     return render_template('register.html',  title="register")
 
 
+@app.route("/users")
+def show_users():
+    members = data_manager.get_users()
+    return render_template('users.html', member=members)
+
+
 @app.route("/list")
 def show_questions():
     order_by_column = request.args.get('column-select')

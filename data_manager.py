@@ -86,6 +86,15 @@ def get_tag(cursor, tag_id):
 
 
 @db_common.connection_handler
+def get_users(cursor):
+    query = """SELECT * 
+            FROM member
+            ORDER BY member_id"""
+    cursor.execute(query)
+    return cursor.fetchall()
+
+
+@db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
         (submission_time, view_number, vote_number, title, message, image, member_id)
