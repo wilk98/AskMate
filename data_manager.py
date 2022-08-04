@@ -287,11 +287,10 @@ def addUser(cursor, new_user):
 
 
 @db_common.connection_handler
-def check_user(cursor, user_data):
-    cursor.execute("""SELECT member_id FROM member
-                        WHERE user_name = %(username)s AND password = %(psw)s""",
+def get_user_password(cursor, user_name):
+    cursor.execute("""SELECT member_id, password FROM member
+                        WHERE user_name = %(username)s""",
                         {
-                            'username': user_data['user_name'],
-                            'psw': user_data['password']
+                            'username': user_name,
                         })
     return cursor.fetchone()
