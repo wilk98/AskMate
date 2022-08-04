@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from bonus_questions import SAMPLE_QUESTIONS
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import connection
 import time
 from datetime import datetime
@@ -47,6 +47,7 @@ def add_question():
         question_to_add['title'] = request.form['title']
         question_to_add['message'] = request.form['message']
         question_to_add['image'] = request.form['image']
+        # user_id = session['userid']
         data_manager.post_question(question_to_add)
         return redirect('/list')
     else:
@@ -130,14 +131,14 @@ def display_question(question_id):
             all_tags.append(i)
         else:
             all_tags.append(i)
-    return render_template('question_to_show.html', question=question_to_show[0], answers=answers_to_show, comment=comment_to_show, tag=all_tags)
+    return render_template('question_to_show.html', question=question_to_show, answers=answers_to_show, comment=comment_to_show, tag=all_tags)
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     comment_to_show = data_manager.get_comment_answer(answer_id)
-    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show[0])
+    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show)
 
 
 @app.route('/question/<question_id>/delete')
@@ -213,6 +214,22 @@ def edit_answer(answer_id):
         return redirect(f'/answer/{answer_id}')
     else:
         return render_template('edit_answer.html', answer_id=answer_id)
+
+
+@app.route('/comments/<comment_id>/edit', methods=["POST", 'GET'])
+def edit_comment(comment_id):
+    comment_to_edit = {}
+    if request.method == "POST":
+        comment_to_edit['id'] = comment_id
+        comment_to_edit['message'] = request.form['message']
+        data_manager.edit_comment(comment_to_edit)
+        # TODO: where to go - answer/question, or just edit comment???
+        return redirect('/list')
+    else:
+        comment_to_edit = data_manager.get_comment(comment_id)
+        comment = comment_to_edit['message']
+        return render_template('comment.html', comment_id=comment_id,
+                               message=comment)
 
 
 @app.route("/question/<question_id>/new-tag", methods=["POST", 'GET'])
