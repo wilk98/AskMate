@@ -97,6 +97,10 @@ def register():
             new_user['password'] = hash
             new_user['registration_date'] = datetime.fromtimestamp(
                 ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            new_user['number_of_questions'] = 0
+            new_user['number_of_answers'] = 0
+            new_user['number_of_comments'] = 0
+            new_user['reputation'] = 0
             data_manager.addUser(new_user)
             if new_user:
                 flash("You have successfully registered!", "success")

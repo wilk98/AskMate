@@ -257,7 +257,7 @@ def get_question_by_column(cursor, column_select, order):
             SELECT id, submission_time, view_number, vote_number,
                     title, message, image
             FROM question
-            ORDER BY """
+            ORDER BY id """
     query += column_select
     if order and order in ['asc', 'desc']:
         query += " " + order
@@ -277,12 +277,16 @@ def get_search(cursor, q):
 @db_common.connection_handler
 def addUser(cursor, new_user):
     print(new_user)
-    cursor.execute("""INSERT INTO member(user_name, password, registration_date)
-                   VALUES (%(e_m)s, %(p_s)s, %(t_m)s )""",
+    cursor.execute("""INSERT INTO member(user_name, password, registration_date, number_of_questions, number_of_answers, number_of_comments, reputation)
+                   VALUES (%(e_m)s, %(p_s)s, %(t_m)s, %(n_q)s, %(n_a)s, %(n_c)s, %(r_n)s )""",
                    {
                        'e_m': new_user['user_name'],
                        'p_s': new_user['password'],
-                       't_m': new_user['registration_date']
+                       't_m': new_user['registration_date'],
+                       'n_q': new_user['number_of_questions'],
+                       'n_a': new_user['number_of_answers'],
+                       'n_c': new_user['number_of_comments'],
+                       'r_n': new_user['reputation'],
                    })
 
 
