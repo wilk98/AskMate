@@ -1,12 +1,16 @@
-from flask import Flask, render_template
+from turtle import title
+from flask import Flask, flash, render_template, url_for
 from bonus_questions import SAMPLE_QUESTIONS
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, flash, session
 import connection
 import time
 from datetime import datetime
 import data_manager
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'ghbdtnvtyzpjdenufkrf'
 
 
 @app.route("/bonus-questions")
@@ -247,15 +251,39 @@ def team_site():
     return render_template('team.html')
 
 
-@app.route("/index")
-def home_site():
-    return render_template('index.html')
-
-
 @app.route("/most_popular")
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
+
+
+@app.route("/login", methods=["POST", 'GET'])
+def login():
+    return render_template('login.html',  title="authorization")
+
+
+@app.route("/register", methods=["POST", 'GET'])
+def register():
+    ts_epoch = (int(time.time()))
+    new_user = {}
+    if request.method == "POST":
+        if len(request.form['email']) > 4 \
+           and len(request.form['psw']) > 3:
+            hash = generate_password_hash(request.form['psw'])
+            new_user['user_name'] = request.form['email']
+            new_user['password'] = request.form['psw']
+            new_user['registration_date'] = str(
+                datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+            data_manager.addUser(new_user)
+            if new_user:
+                flash("You have successfully registered!", "sussess")
+                return redirect(url_for('login'))
+            else:
+                flash("Error adding to database", "error")
+        else:
+            flash("The form contains errors", "error")
+
+    return render_template('register.html',  title="register")
 
 
 if __name__ == "__main__":
