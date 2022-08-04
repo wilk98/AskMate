@@ -88,14 +88,15 @@ def get_tag(cursor, tag_id):
 @db_common.connection_handler
 def post_question(cursor, question_detail):
     cursor.execute("""INSERT INTO question
-        (submission_time, view_number, vote_number, title, message, image) # user_id
-        VALUES (%(s_t)s, %(v_w)s, %(v_e)s, %(t_e)s, %(m_e)s, %(i_e)s)""",
+        (submission_time, view_number, vote_number, title, message, image, member_id)
+        VALUES (%(s_t)s, %(v_w)s, %(v_e)s, %(t_e)s, %(m_e)s, %(i_e)s, %(m_i)s)""",
                    {'s_t': question_detail['submission_time'],
                     'v_w': question_detail['view_number'],
                     'v_e': question_detail['vote_number'],
                     't_e': question_detail['title'],
                     'm_e': question_detail['message'],
-                    'i_e': question_detail['image']
+                    'i_e': question_detail['image'],
+                    'm_i': question_detail['member_id']
                     })
 
 
@@ -271,3 +272,14 @@ def addUser(cursor, new_user):
                        'p_s': new_user['password'],
                        't_m': new_user['registration_date']
                    })
+
+
+@db_common.connection_handler
+def check_user(cursor, user_data):
+    cursor.execute("""SELECT member_id FROM member
+                        WHERE user_name = %(username)s AND password = %(psw)s""",
+                        {
+                            'username': user_data['user_name'],
+                            'psw': user_data['password']
+                        })
+    return cursor.fetchone()

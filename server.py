@@ -27,23 +27,35 @@ def main():
 
 @app.route("/")
 @app.route("/index")
-def hello():
-    if 'user_name' in session:
-        username = escape(session['user_name'])
+def index():
+    if 'member_id' in session:
         print(session)
-        return render_template('index.html', username=username)
+        print(session['member_id'])
+        return render_template('index.html')
     return render_template('index.html')
 
 
 @app.route("/login", methods=["POST", 'GET'])
 def login():
+    user = {}
     if request.method == "POST":
-        hash = generate_password_hash(request.form['psw'])
-        session['user_name'] = request.form['email']
-        session['password'] = hash
+       # hash = check_password_hash()
+        user['user_name'] = request.form['email']
+        user['password'] = request.form['psw']
+        data_check = data_manager.check_user(user)
+        if data_check != []:
+            session['member_id'] = data_check['member_id']
+            return redirect(url_for('index'))
+        else:
+            print("bad login")
 
     return render_template('login.html',  title="authorization")
 
+
+@app.route("/logout")
+def logout():
+    session.pop('member_id', None)
+    return redirect(url_for("login"))
 
 @app.route("/register", methods=["POST", 'GET'])
 def register():
@@ -86,21 +98,22 @@ def show_questions():
 
 @app.route('/question', methods=["POST", "GET"])
 def add_question():
-    ts_epoch = (int(time.time()))
-    question_to_add = {}
-    if request.method == "POST":
-        question_to_add['submission_time'] = str(
-            datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
-        question_to_add['view_number'] = 0
-        question_to_add['vote_number'] = 0
-        question_to_add['title'] = request.form['title']
-        question_to_add['message'] = request.form['message']
-        question_to_add['image'] = request.form['image']
-        # user_id = session['userid']
-        data_manager.post_question(question_to_add)
-        return redirect('/list')
-    else:
-        return render_template('question.html', title=question_to_add.get('title'),
+        ts_epoch = (int(time.time()))
+        question_to_add = {}
+        if request.method == "POST":
+            question_to_add['submission_time'] = str(
+                datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+            question_to_add['view_number'] = 0
+            question_to_add['vote_number'] = 0
+            question_to_add['title'] = request.form['title']
+            question_to_add['message'] = request.form['message']
+            question_to_add['image'] = request.form['image']
+            question_to_add['member_id'] = session['member_id']
+            # user_id = session['userid']
+            data_manager.post_question(question_to_add)
+            return redirect('/list')
+        else:
+            return render_template('question.html', title=question_to_add.get('title'),
                                message=question_to_add.get('message'))
 
 
