@@ -1,5 +1,7 @@
+
+from nturl2path import url2pathname
 from turtle import title
-from flask import Flask, flash, render_template, url_for
+from flask import Flask, flash, render_template, url_for, session
 from bonus_questions import SAMPLE_QUESTIONS
 from flask import Flask, render_template, request, redirect, flash
 import connection
@@ -10,7 +12,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ghbdtnvtyzpjdenufkrf'
+app.secret_key = 'SOME_SECRET'
+
+
+@app.route('/setsession', methods=['GET', 'POST'])
+def set_session():
+    if request.method == 'POST':
+        session['username'] = request.form['email']
+        return redirect(url_for('index'))
+    return redirect(url_for('login'))
+
+
+@app.route('/unsetsession')
+def un_set_session():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 @app.route("/bonus-questions")
@@ -238,18 +254,22 @@ def most_popular_site():
 
 @app.route("/login", methods=["POST", 'GET'])
 def login():
+
     return render_template('login.html',  title="authorization")
 
 
 @app.route("/register", methods=["POST", 'GET'])
 def register():
+    ts_epoch = (int(time.time()))
     new_user = {}
     if request.method == "POST":
         if len(request.form['email']) > 4 \
            and len(request.form['psw']) > 3:
             hash = generate_password_hash(request.form['psw'])
-            new_user['email'] = request.form['email']
-            new_user['psw'] = request.form['psw']
+            new_user['user_name'] = request.form['email']
+            new_user['password'] = hash
+            new_user['registration_date'] = datetime.fromtimestamp(
+                ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
             data_manager.addUser(new_user)
             if new_user:
                 flash("You have successfully registered!", "sussess")
