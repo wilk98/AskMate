@@ -26,7 +26,7 @@ def index():
     if 'member_id' in session:
         print(session)
         print(session['member_id'])
-        return render_template('index.html')
+        return render_template('index.html', logged_user=session['user_name'])
     return render_template('index.html')
 
 
@@ -40,6 +40,7 @@ def login():
         user_data = data_manager.get_user_password(user_name)
         if user_data and check_password_hash(user_data['password'], password):
             session['member_id'] = user_data['member_id']
+            session['user_name'] = user_name
             return redirect(url_for('index'))
         else:
             invalid_credentials = True
@@ -51,6 +52,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.pop('member_id', None)
+    session.pop('user_name', None)
     return redirect(url_for("login"))
 
 @app.route("/register", methods=["POST", 'GET'])
