@@ -9,10 +9,27 @@ import time
 from datetime import datetime
 import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from functools import wraps
 
 app = Flask(__name__)
 app.secret_key = 'ghbdtn93vbh65bdctv407yfv'
+
+
+def get_logged_user():
+    if 'user_name' in session:
+        return session['user_name']
+    else:
+        return None
+
+
+def login_required(f):
+    @wraps(f)
+    def decorate_func(*args, **kwargs):
+        if 'member_id' in session:
+            return f(*args, **kwargs)
+        else:
+            return redirect("/login")
+    return decorate_func
 
 
 @app.route("/bonus-questions")
@@ -55,6 +72,7 @@ def logout():
     session.pop('user_name', None)
     return redirect(url_for("login"))
 
+
 @app.route("/register", methods=["POST", 'GET'])
 def register():
     ts_epoch = (int(time.time()))
@@ -69,7 +87,7 @@ def register():
                 ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
             data_manager.addUser(new_user)
             if new_user:
-                flash("You have successfully registered!", "sussess")
+                flash("You have successfully registered!", "success")
                 return redirect(url_for('login'))
             else:
                 flash("Error adding to database", "error")
@@ -80,9 +98,10 @@ def register():
 
 
 @app.route("/users")
+@login_required
 def show_users():
     members = data_manager.get_users()
-    return render_template('users.html', member=members)
+    return render_template('users.html', member=members, logged_user=get_logged_user())
 
 
 @app.route("/list")
@@ -97,31 +116,38 @@ def show_questions():
         questions = data_manager.get_search(get_scan)
     else:
         questions = data_manager.read_questions()
-    return render_template('list.html', list=questions, column_select=order_by_column, order=direction)
+    return render_template('list.html',
+                           list=questions,
+                           column_select=order_by_column,
+                           order=direction,
+                           logged_user=get_logged_user())
 
 
 @app.route('/question', methods=["POST", "GET"])
+@login_required
 def add_question():
-        ts_epoch = (int(time.time()))
-        question_to_add = {}
-        if request.method == "POST":
-            question_to_add['submission_time'] = str(
-                datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
-            question_to_add['view_number'] = 0
-            question_to_add['vote_number'] = 0
-            question_to_add['title'] = request.form['title']
-            question_to_add['message'] = request.form['message']
-            question_to_add['image'] = request.form['image']
-            question_to_add['member_id'] = session['member_id']
-            # user_id = session['userid']
-            data_manager.post_question(question_to_add)
-            return redirect('/list')
-        else:
-            return render_template('question.html', title=question_to_add.get('title'),
-                               message=question_to_add.get('message'))
+    ts_epoch = (int(time.time()))
+    question_to_add = {}
+    if request.method == "POST":
+        question_to_add['submission_time'] = str(
+            datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
+        question_to_add['view_number'] = 0
+        question_to_add['vote_number'] = 0
+        question_to_add['title'] = request.form['title']
+        question_to_add['message'] = request.form['message']
+        question_to_add['image'] = request.form['image']
+        question_to_add['member_id'] = session['member_id']
+        # user_id = session['userid']
+        data_manager.post_question(question_to_add)
+        return redirect('/list')
+    else:
+        return render_template('question.html', title=question_to_add.get('title'),
+                               message=question_to_add.get('message'),
+                               logged_user=get_logged_user())
 
 
 @app.route('/question/<question_id>/new_answer', methods=['POST', 'GET'])
+@login_required
 def add_new_answer(question_id):
     ts_epoch = (int(time.time()))
     answer_to_post = {}
@@ -137,10 +163,12 @@ def add_new_answer(question_id):
         return redirect('/list')
     return render_template('answer.html',
                            question_id=question_id,
-                           message='')
+                           message='',
+                           logged_user=get_logged_user())
 
 
 @app.route('/question/<question_id>/new-comment', methods=['POST', 'GET'])
+@login_required
 def add_comment_question(question_id):
     ts_epoch = (int(time.time()))
     comment_to_post = {}
@@ -154,10 +182,12 @@ def add_comment_question(question_id):
         data_manager.post_comment_question(comment_to_post)
 
         return redirect('/list')
-    return render_template('comment_question.html', question_id=question_id)
+    return render_template('comment_question.html', question_id=question_id,
+                           logged_user=get_logged_user())
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['POST', 'GET'])
+@login_required
 def add_comment_answer(answer_id):
     ts_epoch = (int(time.time()))
     comment_to_post = {}
@@ -171,7 +201,8 @@ def add_comment_answer(answer_id):
         data_manager.post_comment_answer(comment_to_post)
 
         return redirect('/list')
-    return render_template('comment_answer.html', answer_id=answer_id)
+    return render_template('comment_answer.html', answer_id=answer_id,
+                           logged_user=get_logged_user())
 
 
 # @app.route("/question/<question_id>")
@@ -200,17 +231,21 @@ def display_question(question_id):
             all_tags.append(i)
         else:
             all_tags.append(i)
-    return render_template('question_to_show.html', question=question_to_show, answers=answers_to_show, comment=comment_to_show, tag=all_tags)
+    return render_template('question_to_show.html', question=question_to_show,
+                           answers=answers_to_show, comment=comment_to_show, tag=all_tags,
+                           logged_user=get_logged_user())
 
 
 @app.route("/answer/<answer_id>")
 def display_answer(answer_id):
     answer_to_show = data_manager.get_answer(answer_id)
     comment_to_show = data_manager.get_comment_answer(answer_id)
-    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show)
+    return render_template('answer_to_show.html', comment=comment_to_show, answer=answer_to_show,
+                           logged_user=get_logged_user())
 
 
 @app.route('/question/<question_id>/delete')
+@login_required
 def delete_question(question_id):
     print(question_id)
     data_manager.delete_answers(question_id)
@@ -219,42 +254,49 @@ def delete_question(question_id):
 
 
 @app.route('/answer/<answer_id>/delete')
+@login_required
 def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
     return redirect('/list')
 
 
 @app.route('/comments/<comment_id>/delete')
+@login_required
 def delete_comment(comment_id):
     data_manager.delete_comment(comment_id)
     return redirect('/list')
 
 
 @app.route('/question/<question_id>/vote-up')
+@login_required
 def que_vote_up(question_id):
     data_manager.vote_question_up(question_id)
     return redirect('/list')
 
 
 @app.route('/question/<question_id>/vote-down')
+@login_required
 def que_vote_down(question_id):
     data_manager.vote_question_down(question_id)
     return redirect('/list')
 
 
 @app.route('/answer/<answer_id>/vote-up')
+@login_required
 def ans_vote_up(answer_id):
     data_manager.vote_answer_up(answer_id)
     return redirect('/list')
 
 
 @app.route('/answer/<answer_id>/vote-down')
+@login_required
 def ans_vote_down(answer_id):
     data_manager.vote_answer_down(answer_id)
     return redirect('/list')
 
 
 @app.route('/question/<question_id>/edit', methods=["POST", 'GET'])
+@login_required
 def edit_question(question_id):
     question_to_edit = {}
     if request.method == "POST":
@@ -269,10 +311,12 @@ def edit_question(question_id):
         title = question_to_edit['title']
         question = question_to_edit['message']
         return render_template('edit_question.html', question_id=question_id,
-                               title=title, message=question)
+                               title=title, message=question,
+                               logged_user=get_logged_user())
 
 
 @app.route('/answer/<answer_id>/edit', methods=["POST", 'GET'])
+@login_required
 def edit_answer(answer_id):
     answer_to_edit = {}
     if request.method == "POST":
@@ -282,44 +326,49 @@ def edit_answer(answer_id):
         data_manager.edit_answer(answer_to_edit)
         return redirect(f'/answer/{answer_id}')
     else:
-        return render_template('edit_answer.html', answer_id=answer_id)
+        return render_template('edit_answer.html', answer_id=answer_id,
+                               logged_user=get_logged_user())
 
 
 @app.route('/comments/<comment_id>/edit', methods=["POST", 'GET'])
+@login_required
 def edit_comment(comment_id):
     comment_to_edit = {}
     if request.method == "POST":
         comment_to_edit['id'] = comment_id
         comment_to_edit['message'] = request.form['message']
         data_manager.edit_comment(comment_to_edit)
-        # TODO: where to go - answer/question, or just edit comment???
         return redirect('/list')
     else:
         comment_to_edit = data_manager.get_comment(comment_id)
         comment = comment_to_edit['message']
         return render_template('comment.html', comment_id=comment_id,
-                               message=comment)
+                               message=comment,
+                               logged_user=get_logged_user())
 
 
 @app.route("/question/<question_id>/new-tag", methods=["POST", 'GET'])
+@login_required
 def add_tag(question_id):
     if request.method == "POST":
         new_tag = request.form['tag']
         data_manager.add_tag(new_tag, question_id)
         return redirect(f'/list')
     else:
-        return render_template('tag.html', question_id=question_id)
+        return render_template('tag.html', question_id=question_id,
+                               logged_user=get_logged_user())
 
 
 @app.route("/team")
 def team_site():
-    return render_template('team.html')
+    return render_template('team.html', logged_user=get_logged_user())
 
 
 @app.route("/most_popular")
 def most_popular_site():
     top_questions = connection.top_questions()
-    return render_template('most_popular.html', most_popular=top_questions)
+    return render_template('most_popular.html', most_popular=top_questions,
+                           logged_user=get_logged_user())
 
 
 
