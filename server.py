@@ -33,6 +33,7 @@ def index():
 @app.route("/login", methods=["POST", 'GET'])
 def login():
     user = {}
+    invalid_credentials = False
     if request.method == "POST":
         user_name = request.form['email']
         password = request.form['psw']
@@ -41,9 +42,10 @@ def login():
             session['member_id'] = user_data['member_id']
             return redirect(url_for('index'))
         else:
+            invalid_credentials = True
             print("bad login")
 
-    return render_template('login.html',  title="authorization")
+    return render_template('login.html',  title="authorization", invalid_credentials=invalid_credentials)
 
 
 @app.route("/logout")
