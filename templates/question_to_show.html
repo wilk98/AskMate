@@ -21,12 +21,15 @@ Question site
     {% for item in comment %}
             <div><br>
                 <p>{{ item.message }}<br>
-                Added on: {{ item.submission_time }}<a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a><br>
+                Added on: {{ item.submission_time }}<br><a href="/comments/{{ item.id }}/delete" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Delete comment</a>
+                <a href="/comments/{{ item.id }}/edit" type="button" class="btn btn-outline-dark btn-lg active btn-sm mt-2 mb-3" role="button">Edit comment</a><br>
                 </p>
             </div>
         {% endfor %}
 
     <a href="/question/{{ question.id }}/new-comment" type="button" class="btn btn-outline-primary btn-lg active btn-sm mt-2 mb-3" role="button">Add comment</a>
+
+
 
 </div>
     <h5>Answers:</h5>
