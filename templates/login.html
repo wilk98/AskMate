@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Authorization
+Log in
 {% endblock %}
 
 {% block body %}
+
+{% for msg in get_flashed_messages() %}
+<div class="flash">{{msg}}</div>
+{% endfor %}
+
+<h2>Log in</h2>
    <form class="container col-lg-4 mt-5" action="/login" method="post">
       <div class="form-group mb-2">
          <label for="exampleInputEmail1">Email address</label>

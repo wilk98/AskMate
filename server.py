@@ -1,5 +1,7 @@
+
+from nturl2path import url2pathname
 from turtle import title
-from flask import Flask, flash, render_template, url_for
+from flask import Flask, flash, render_template, url_for, session, escape
 from bonus_questions import SAMPLE_QUESTIONS
 from flask import Flask, render_template, request, redirect, flash
 import connection
@@ -9,8 +11,13 @@ import data_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+class User:
+    def __init__(self, id, username, password):
+        pass
+
+
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'ghbdtnvtyzpjdenufkrf'
+app.config['SECRET_KEY'] = 'ghbdtn93vbh65bdctv407yfv'
 
 
 @app.route("/bonus-questions")
@@ -21,7 +28,45 @@ def main():
 @app.route("/")
 @app.route("/index")
 def hello():
+    if 'user_name' in session:
+        username = escape(session['user_name'])
+        print(session)
+        return render_template('index.html', username=username)
     return render_template('index.html')
+
+
+@app.route("/login", methods=["POST", 'GET'])
+def login():
+    if request.method == "POST":
+        hash = generate_password_hash(request.form['psw'])
+        session['user_name'] = request.form['email']
+        session['password'] = hash
+
+    return render_template('login.html',  title="authorization")
+
+
+@app.route("/register", methods=["POST", 'GET'])
+def register():
+    ts_epoch = (int(time.time()))
+    new_user = {}
+    if request.method == "POST":
+        if len(request.form['email']) > 4 \
+           and len(request.form['psw']) > 3:
+            hash = generate_password_hash(request.form['psw'])
+            new_user['user_name'] = request.form['email']
+            new_user['password'] = hash
+            new_user['registration_date'] = datetime.fromtimestamp(
+                ts_epoch).strftime('%Y-%m-%d %H:%M:%S')
+            data_manager.addUser(new_user)
+            if new_user:
+                flash("You have successfully registered!", "sussess")
+                return redirect(url_for('login'))
+            else:
+                flash("Error adding to database", "error")
+        else:
+            flash("The form contains errors", "error")
+
+    return render_template('register.html',  title="register")
 
 
 @app.route("/list")
@@ -238,34 +283,6 @@ def team_site():
 def most_popular_site():
     top_questions = connection.top_questions()
     return render_template('most_popular.html', most_popular=top_questions)
-
-
-@app.route("/login", methods=["POST", 'GET'])
-def login():
-    return render_template('login.html',  title="authorization")
-
-
-@app.route("/register", methods=["POST", 'GET'])
-def register():
-    ts_epoch = (int(time.time()))
-    new_user = {}
-    if request.method == "POST":
-        if len(request.form['email']) > 4 \
-           and len(request.form['psw']) > 3:
-            hash = generate_password_hash(request.form['psw'])
-            new_user['user_name'] = request.form['email']
-            new_user['password'] = request.form['psw']
-            new_user['registration_date'] = str(datetime.fromtimestamp(ts_epoch).strftime('%Y-%m-%d %H:%M:%S'))
-            data_manager.addUser(new_user)
-            if new_user:
-                flash("You have successfully registered!", "sussess")
-                return redirect(url_for('login'))
-            else:
-                flash("Error adding to database", "error")
-        else:
-            flash("The form contains errors", "error")
-
-    return render_template('register.html',  title="register")
 
 
 if __name__ == "__main__":
