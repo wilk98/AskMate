@@ -151,6 +151,7 @@ def add_question():
         question_to_add['member_id'] = session['member_id']
         # user_id = session['userid']
         data_manager.post_question(question_to_add)
+        data_manager.add_number_question(session['member_id'])
         return redirect('/list')
     else:
         return render_template('question.html', title=question_to_add.get('title'),
@@ -172,6 +173,7 @@ def add_new_answer(question_id):
         answer_to_post['image'] = request.form['image']
         answer_to_post['member_id'] = session['member_id']
         data_manager.post_answer(answer_to_post)
+        data_manager.add_number_answer(session['member_id'])
         return redirect('/list')
     return render_template('answer.html',
                            question_id=question_id,
@@ -192,7 +194,7 @@ def add_comment_question(question_id):
         comment_to_post['question_id'] = question_id
         comment_to_post['member_id'] = session['member_id']
         data_manager.post_comment_question(comment_to_post)
-
+        data_manager.add_number_comment(session['member_id'])
         return redirect('/list')
     return render_template('comment_question.html', question_id=question_id,
                            logged_user=get_logged_user())
@@ -211,7 +213,7 @@ def add_comment_answer(answer_id):
         comment_to_post['answer_id'] = answer_id
         comment_to_post['member_id'] = session['member_id']
         data_manager.post_comment_answer(comment_to_post)
-
+        data_manager.add_number_comment(session['member_id'])
         return redirect('/list')
     return render_template('comment_answer.html', answer_id=answer_id,
                            logged_user=get_logged_user())
@@ -262,6 +264,7 @@ def delete_question(question_id):
     print(question_id)
     data_manager.delete_answers(question_id)
     data_manager.delete_question(question_id)
+    data_manager.delete_number_question(session['member_id'])
     return redirect('/list')
 
 
@@ -269,6 +272,7 @@ def delete_question(question_id):
 @login_required
 def delete_answer(answer_id):
     data_manager.delete_answer(answer_id)
+    data_manager.delete_number_answer(session['member_id'])
     return redirect('/list')
 
 
@@ -276,6 +280,7 @@ def delete_answer(answer_id):
 @login_required
 def delete_comment(comment_id):
     data_manager.delete_comment(comment_id)
+    data_manager.delete_number_comment(session['member_id'])
     return redirect('/list')
 
 

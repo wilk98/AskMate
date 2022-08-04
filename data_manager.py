@@ -333,3 +333,54 @@ def get_user_comments(cursor, user_id):
                    {'user_id': user_id,
                     })
     return cursor.fetchall()
+
+
+@db_common.connection_handler
+def add_number_question(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_questions = number_of_questions + 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
+
+
+@db_common.connection_handler
+def add_number_answer(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_answers = number_of_answers + 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
+
+
+@db_common.connection_handler
+def add_number_comment(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_comments = number_of_comments + 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
+
+@db_common.connection_handler
+def delete_number_question(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_questions = number_of_questions - 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
+
+@db_common.connection_handler
+def delete_number_answer(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_answers = number_of_answers - 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
+
+@db_common.connection_handler
+def delete_number_comment(cursor, user_id):
+    query = """UPDATE member
+            SET number_of_comments = number_of_comments - 1
+            WHERE member_id = %s;
+            """
+    return cursor.execute(query, (user_id,))
