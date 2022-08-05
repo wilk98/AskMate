@@ -249,7 +249,6 @@ def add_tag(cursor, new_tag, question_id):
 
 @db_common.connection_handler
 def get_question_by_column(cursor, column_select, order):
-    # TODO: check column_select value to avoid SQL Injection!
     allowed_columns = ['title', 'submission_time', 'view_number', 'vote_number', 'message']
     if column_select not in allowed_columns:
         column_select = 'title'
@@ -257,7 +256,7 @@ def get_question_by_column(cursor, column_select, order):
             SELECT id, submission_time, view_number, vote_number,
                     title, message, image
             FROM question
-            ORDER BY id """
+            ORDER BY """
     query += column_select
     if order and order in ['asc', 'desc']:
         query += " " + order
@@ -365,6 +364,7 @@ def add_number_comment(cursor, user_id):
             """
     return cursor.execute(query, (user_id,))
 
+
 @db_common.connection_handler
 def delete_number_question(cursor, user_id):
     query = """UPDATE member
@@ -373,6 +373,7 @@ def delete_number_question(cursor, user_id):
             """
     return cursor.execute(query, (user_id,))
 
+
 @db_common.connection_handler
 def delete_number_answer(cursor, user_id):
     query = """UPDATE member
@@ -380,6 +381,7 @@ def delete_number_answer(cursor, user_id):
             WHERE member_id = %s;
             """
     return cursor.execute(query, (user_id,))
+
 
 @db_common.connection_handler
 def delete_number_comment(cursor, user_id):
