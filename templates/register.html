@@ -5,11 +5,12 @@ Register
 {% endblock %}
 
 {% block body %}
-
+<div class="container">
 {% for msg in get_flashed_messages() %}
 <div class="flash">{{msg}}</div>
 {% endfor %}
-<h2>Register</h2>
+<h2>Join the Team G.A.M.M community</h2>
+</div>
 <form class="container col-lg-4 mt-5" action="/register" method="post">
       <!--<div class="form-group mb-2">
       <label for="username">User name</label>
@@ -30,4 +31,5 @@ Register
       </div>-->
    <button type="submit" class="btn btn-primary mt-3 mb-2">Submit</button>
 </form>
+</div>
 {% endblock %}
