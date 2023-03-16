@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Ask a question
+{% endblock %}
+
+
+{% block body %}
+     <h2>Ask a question</h2>
+         <form class="form-group col-lg-5" action="/question" method="post">
+            <label>Title: </label><br>
+             <input  class="form-control col-lg-6" type="text" name="title"/><br>
+             <label>Question: </label> <br>
+             <textarea class="form-control" type="text" name="message" ></textarea><br>
+             
+             <label  class="col-lg-6" type="text" name="image" for="exampleFormControlFile1"/>Example file input {% block image %}{% endblock %}></label><br>
+             <input type="file" class="form-control col-lg-6 mt-1" id="image" name="image" rows="1" cols="40">{{ image if image }}</input>
+            <button type="submit" class="btn btn-success mt-4 btn-lg"><strong>Send</strong></button>
+
+        </form>
+
+{% endblock %}
